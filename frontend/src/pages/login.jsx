@@ -82,17 +82,17 @@ const Login = () => {
         <div className="w-full max-w-md">
 
           <h2 className="text-3xl font-bold mb-2">
-            Bioindicators<span className="opacity-70">TECH</span>
+            Bioindication<span className="opacity-70">TECH</span>
           </h2>
 
           <p className="mb-6 opacity-70">
-            Welcome to Bioindicators
-          </p>
+            Welcome to Bioindication
+          </p>                                                                        
 
           {/* Error */}
           {error && (
             <p className="text-sm text-red-500 mb-3">{error}</p>
-          )}
+          )}      
 
           {/* Email */}
           <div className="mb-4 relative">
@@ -154,7 +154,7 @@ const Login = () => {
             <p>Super Admin: superAdmin@superAdmin.com / superAdmin123</p>
             <p>Admin: admin@admin.com / admin123</p>
             {/* <p>Doctor: doctor@doctor.com / doctor123</p> */}
-            <p>Patient: user@user.com / user123</p>
+            <p>user: user@user.com / user123</p>
           </div>
         </div>
       </div>
