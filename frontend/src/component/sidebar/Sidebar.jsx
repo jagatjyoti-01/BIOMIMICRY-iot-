@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ collapsed, toggleSidebar }) => {
   const [openDashboard, setOpenDashboard] = useState(true);
@@ -30,18 +31,18 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
     superadmin: {
       label: "System Admin",
       subLabel: "Global Access",
-      dashboard: "/superadmin/dashboard",
+      dashboard: "/dashboard/superadmin",
       management: [
-        { name: "Organizations", icon: Building, path: "/superadmin/orgs" },
-        { name: "Users", icon: Users, path: "/superadmin/users" },
-        { name: "Roles & Permissions", icon: Users, path: "/superadmin/roles" },
-        { name: "Devices", icon: Cpu, path: "/superadmin/devices" },
+ //d       { name: "Organizations", icon: Building, path: "/dashboard/orgs" },
+        { name: "Users", icon: Users, path: "/dashboard/users" },
+        { name: "Roles & Permissions", icon: Users, path: "/dashboard/permissions" },
+        { name: "Devices", icon: Cpu, path: "/dashboard/devices" },
       ],
       monitoring: [
-        { name: "Live Monitoring", icon: Cpu, path: "/superadmin/live" },
-        { name: "Alerts", icon: AlertTriangle, path: "/superadmin/alerts" },
-        { name: "Analytics", icon: BarChart3, path: "/superadmin/analytics" },
-        { name: "Reports", icon: FileText, path: "/superadmin/reports" },
+        { name: "Live Monitoring", icon: Cpu, path: "/dashboard/live" },
+        { name: "Alerts", icon: AlertTriangle, path: "/dashboard/alerts" },
+        { name: "Analytics", icon: BarChart3, path: "/dashboard/analytics" },
+        { name: "Reports", icon: FileText, path: "/dashboard/reports" },
       ],
     },
 
@@ -218,6 +219,15 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
         {!collapsed && (
           <p className="text-xs text-gray-400 mt-5 mb-2">SYSTEM</p>
         )}
+
+       <Link to="/devices">
+  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 cursor-pointer">
+    <div className="flex items-center gap-3">
+      <Settings size={18} />
+      {!collapsed && <span>Device</span>}
+    </div>
+  </div>
+</Link>
 
         <div className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 cursor-pointer">
           <div className="flex items-center gap-3">

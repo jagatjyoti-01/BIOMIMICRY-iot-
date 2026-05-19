@@ -4,7 +4,7 @@ import { Cpu, Activity, AlertTriangle, Zap } from "lucide-react";
 
 const Dashboard = () => {
   return (
-    <DashboardLayout>
+   
 
       <div className="space-y-6">
 
@@ -55,7 +55,7 @@ const Dashboard = () => {
 
       </div>
 
-    </DashboardLayout>
+    
   );
 };
 

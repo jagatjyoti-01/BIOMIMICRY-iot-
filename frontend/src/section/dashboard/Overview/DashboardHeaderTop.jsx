@@ -1,8 +1,12 @@
 import React from "react";
 
+import {useNavigate} from "react-router-dom";
+
 const DashboardHeaderTop = () => {
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const userRole = userData.role || "admin";
+
+  const navigate = useNavigate();
 
   // TITLE
   const getTitle = () => {
@@ -25,11 +29,11 @@ const DashboardHeaderTop = () => {
       case "superadmin":
         return (
           <>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium">
-              + Add Organization
+            <button onClick={()=>navigate("/dashboard/users")} className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-md text-sm font-medium">
+              + Add User
             </button>
 
-            <button className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium">
+            <button onClick={()=>navigate("/dashboard/devices")} className="border cursor-pointer border-gray-300 px-4 py-2 rounded-md text-sm font-medium">
               + Add Device
             </button>
           </>

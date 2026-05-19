@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import {
   BarChart,
   Bar,
@@ -9,80 +10,225 @@ import {
   Legend,
 } from "recharts";
 
-const data = [
-  { name: "Jan", active: 150, dataFlow: 400, alerts: 30 },
-  { name: "Feb", active: 180, dataFlow: 500, alerts: 40 },
-  { name: "Mar", active: 230, dataFlow: 700, alerts: 35 },
-  { name: "Apr", active: 240, dataFlow: 600, alerts: 25 },
-  { name: "May", active: 260, dataFlow: 900, alerts: 50 },
-  { name: "Jun", active: 120, dataFlow: 400, alerts: 20 },
-  { name: "Jul", active: 170, dataFlow: 500, alerts: 30 },
-  { name: "Aug", active: 200, dataFlow: 600, alerts: 28 },
-  { name: "Sep", active: 280, dataFlow: 900, alerts: 60 },
-  { name: "Oct", active: 270, dataFlow: 800, alerts: 55 },
-  { name: "Nov", active: 220, dataFlow: 700, alerts: 40 },
-  { name: "Dec", active: 210, dataFlow: 600, alerts: 35 },
-];
+import { getDashboardStats,
+  getSensorAnalytics,} from "../../../services/services";
+
+// ================= STATIC CHART DATA =================
+
+
 
 const DeviceActivity = () => {
-  return (
-    <div className="bg-white border border-gray-200 rounded-xl p-6">
 
-      {/* Header */}
+  // ================= STATE =================
+
+  const [stats, setStats] = useState({
+
+    totalDevices: 0,
+
+    onlineDevices: 0,
+
+    offlineDevices: 0,
+
+    activeDevices: 0,
+
+  });
+
+
+  const [chartData, setChartData] =
+  useState([]);
+
+
+  const fetchAnalytics =
+  async () => {
+
+    try {
+
+      const response =
+        await getSensorAnalytics();
+
+      // FORMAT DATA
+      const formattedData =
+        response.data.data.map(
+          (item) => ({
+
+            name: new Date(
+              item.date
+            ).toLocaleDateString(
+              "en-IN",
+              {
+                day: "2-digit",
+                month: "short",
+              }
+            ),
+
+            flow: Number(
+              item.flow
+            ).toFixed(2),
+
+            volume: Number(
+              item.volume
+            ).toFixed(2),
+
+          })
+        );
+
+      setChartData(
+        formattedData
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  useEffect(() => {
+
+  fetchStats();
+
+  fetchAnalytics();
+
+}, []);
+  // ================= FETCH DASHBOARD STATS =================
+
+  const fetchStats = async () => {
+
+    try {
+
+      const response =
+        await getDashboardStats();
+
+      setStats(response.data.data);
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+
+
+  return (
+
+    <div className="bg-white border border-gray-200 rounded-xl p-6 mt-6">
+
+      {/* HEADER */}
       <div className="flex justify-between items-center mb-5">
+
         <h2 className="text-lg font-semibold text-gray-800">
           Device Activity Overview
         </h2>
 
-        <select className="border border-gray-200 rounded-md px-3 py-1 text-sm">
-          <option>Monthly</option>
+        <select className="border border-gray-200 rounded-md px-3 py-1 text-sm outline-none">
+
+          <option>
+            Monthly
+          </option>
+
         </select>
+
       </div>
 
-      {/* Stats Summary */}
-      <div className="grid grid-cols-3 gap-4 mb-6">
+      {/* SUMMARY CARDS */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
 
+        {/* ACTIVE DEVICES */}
         <div className="bg-gray-50 border border-gray-300 rounded-lg p-4">
+
           <div className="flex items-center gap-2 text-sm text-gray-500">
+
             <span className="w-2 h-2 rounded-full bg-green-500" />
+
             Active Devices
+
           </div>
-          <p className="text-xl font-semibold mt-1">290</p>
+
+          <p className="text-2xl font-semibold mt-2">
+
+            {stats.activeDevices}
+
+          </p>
+
         </div>
 
+        {/* TOTAL DEVICES */}
         <div className="bg-gray-50 border border-gray-300 rounded-lg p-4">
+
           <div className="flex items-center gap-2 text-sm text-gray-500">
+
             <span className="w-2 h-2 rounded-full bg-blue-500" />
-            Data Flow
+
+            Total Devices
+
           </div>
-          <p className="text-xl font-semibold mt-1">1200/s</p>
+
+          <p className="text-2xl font-semibold mt-2">
+
+            {stats.totalDevices}
+
+          </p>
+
         </div>
 
+        {/* OFFLINE DEVICES */}
         <div className="bg-gray-50 border border-gray-300 rounded-lg p-4">
+
           <div className="flex items-center gap-2 text-sm text-gray-500">
+
             <span className="w-2 h-2 rounded-full bg-red-500" />
-            Alerts
+
+            Offline Devices
+
           </div>
-          <p className="text-xl font-semibold mt-1">18</p>
+
+          <p className="text-2xl font-semibold mt-2">
+
+            {stats.offlineDevices}
+
+          </p>
+
         </div>
 
       </div>
 
-      {/* Chart */}
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data}>
+      {/* CHART */}
+      <ResponsiveContainer
+        width="100%"
+        height={320}
+      >
+
+       <BarChart data={chartData}>
+
           <XAxis dataKey="name" />
+
           <YAxis />
+
           <Tooltip />
+
           <Legend />
 
-          <Bar dataKey="active" stackId="a" fill="#22c55e" />
-          <Bar dataKey="dataFlow" stackId="a" fill="#3b82f6" />
-          <Bar dataKey="alerts" stackId="a" fill="#ef4444" />
+        <Bar
+  dataKey="flow"
+  fill="#3b82f6"
+  radius={[4, 4, 0, 0]}
+/>
+
+<Bar
+  dataKey="volume"
+  fill="#10b981"
+  radius={[4, 4, 0, 0]}
+/>
+
         </BarChart>
+
       </ResponsiveContainer>
 
     </div>
+
   );
 };
 

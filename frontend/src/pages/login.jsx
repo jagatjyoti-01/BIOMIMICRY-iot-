@@ -1,27 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Mail, Lock, Eye, EyeOff, Sun, Moon } from "lucide-react";
+import { signIn } from "../services/services";
+import {
+  setCurrentAccessToken,
+  setCurrentUser,
+} from "../services/axiosClient";
 
-const users = [
-  {
-    role: "admin",
-    email: "admin@admin.com",
-    password: "admin123",
-    redirect: "/admin/dashboard",
-  },
-  {
-  role: "superadmin",
-  email: "superadmin@superadmin.com",
-  password: "superAdmin123",
-  redirect: "/superadmin/dashboard",
-},
-  {
-    role: "User",
-    email: "user@user.com",
-    password: "user123",
-    redirect: "/user/dashboard",
-  },
-];
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,21 +18,45 @@ const Login = () => {
   const [dark, setDark] = useState(false);
   const [error, setError] = useState("");
 
-  const handleLogin = () => {
-    const user = users.find(
-      (u) =>
-        u.email === email.trim().toLowerCase() &&
-        u.password === password
-    );
+  const handleLogin = async () => {
+  try {
+    setError("");
 
-    if (!user) {
-      setError("Invalid email or password");
-      return;
+    const response = await signIn({
+      email,
+      password,
+    });
+
+    //console.log("login responce",response)
+
+    // backend response
+    const token = response.data.token;
+    const user = response.data.user;
+
+
+
+    // save token & user
+    setCurrentAccessToken(token);
+    setCurrentUser(user);
+
+    // role based redirect
+    if (user.role === "superadmin") {
+      navigate("/dashboard/superadmin");
+    } else if (user.role === "admin") {
+      navigate("/admin/dashboard");
+    } else {
+      navigate("/user/dashboard");
     }
 
-    localStorage.setItem("user", JSON.stringify(user));
-    navigate(user.redirect);
-  };
+  } catch (error) {
+    console.log(error);
+
+    setError(
+      error?.response?.data?.message ||
+      "Invalid email or password"
+    );
+  }
+};
 
   return (
     <div
@@ -151,10 +161,10 @@ const Login = () => {
             }`}
           >
             <p className="font-semibold mb-2">Demo Accounts</p>
-            <p>Super Admin: superAdmin@superAdmin.com / superAdmin123</p>
-            <p>Admin: admin@admin.com / admin123</p>
+            <p>Super Admin: admins@gmail.com / 123456</p>
+            <p>Admin: admin@admin.com / admin123</p>  
             {/* <p>Doctor: doctor@doctor.com / doctor123</p> */}
-            <p>user: user@user.com / user123</p>
+            <p>user: usefr3@test.com / 12345326</p>
           </div>
         </div>
       </div>

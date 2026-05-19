@@ -11,7 +11,7 @@ import DeviceTable from "../../section/dashboard/Overview/DeviceTable";
 
 const AdminDashboard = () => {
   return (
-    <DashboardLayout>
+    
       <div className="p-6 bg-gray-100 min-h-screen">
 
         {/* Header */}
@@ -47,7 +47,7 @@ const AdminDashboard = () => {
         <DeviceTable />
 
       </div>
-    </DashboardLayout>
+    
   );
 };
 

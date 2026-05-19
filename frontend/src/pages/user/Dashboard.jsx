@@ -1,4 +1,4 @@
-import DashboardLayout from "../../layouts/DashboardLayout";
+
 import DashboardHeaderTop from "../../section/dashboard/Overview/DashboardHeaderTop";
 import StatsCard from "../../section/dashboard/Overview/StatsGrid";
 import DeviceActivity from "../../section/dashboard/Overview/DeviceActivity";
@@ -14,7 +14,7 @@ import WaterFlowChart from "../../section/dashboard/User/WaterFlowChart";
 
 const UserDashboard = () => {
   return (
-    <DashboardLayout>
+   <>
       <div className="p-6 bg-gray-100 min-h-screen">
 
         {/* Header */}
@@ -62,7 +62,7 @@ const UserDashboard = () => {
   </div>
 
 </div>
-    </DashboardLayout>
+    </>
   );
 };
 

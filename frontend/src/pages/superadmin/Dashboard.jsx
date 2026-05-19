@@ -1,4 +1,4 @@
-import DashboardLayout from "../../layouts/DashboardLayout";
+
 import DashboardHeaderTop from "../../section/dashboard/Overview/DashboardHeaderTop";
 import StatsCard from "../../section/dashboard/Overview/StatsGrid";
 import DeviceActivity from "../../section/dashboard/Overview/DeviceActivity";
@@ -11,39 +11,33 @@ import DeviceTable from "../../section/dashboard/Overview/DeviceTable";
 
 const SuperAdminDashboard = () => {
   return (
-    <DashboardLayout>
-     
+    <>
       <DashboardHeaderTop />
-      <StatsCard  />
+      <StatsCard />
 
-       <div className="flex gap-6 mt-6">
-
+      <div className="flex gap-6 mt-6">
         <div className="flex-1">
-          <DeviceActivity />      {/* instead of AppointmentStats */}
-          <RecentAlerts />        {/* instead of PopularDoctors */}
+          <DeviceActivity /> {/* instead of AppointmentStats */}
+          <RecentAlerts /> {/* instead of PopularDoctors */}
         </div>
-
-        <SystemStatusPanel />     {/* instead of RightPanel */}
-
-        
-
+        <SystemStatusPanel /> {/* instead of RightPanel */}
       </div>
 
-       <div className="grid grid-cols-12 gap-6 mt-6 mb-4">
-          <div className="col-span-12 lg:col-span-4">
-            <WaterQualityChart />
-          </div>
-
-          <div className="col-span-12 lg:col-span-4">
-            <DeviceDistribution />
-          </div>
-
-          <div className="col-span-12 lg:col-span-4">
-            <PowerUsage />
-          </div>
+      <div className="grid grid-cols-12 gap-6 mt-6 mb-4">
+        <div className="col-span-12 lg:col-span-4">
+          <WaterQualityChart />
         </div>
-        <DeviceTable />
-    </DashboardLayout>
+
+        <div className="col-span-12 lg:col-span-4">
+          <DeviceDistribution />
+        </div>
+
+        <div className="col-span-12 lg:col-span-4">
+          <PowerUsage />
+        </div>
+      </div>
+      <DeviceTable />
+    </>
   );
 };
 

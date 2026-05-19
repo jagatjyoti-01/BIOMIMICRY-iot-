@@ -1,8 +1,11 @@
 import Sidebar from "../component/sidebar/Sidebar";
 import Header from "../component/header/Header";
+
 import { useState } from "react";
 
-const DashboardLayout = ({ children }) => {
+import { Outlet } from "react-router-dom";
+
+const DashboardLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
@@ -11,18 +14,26 @@ const DashboardLayout = ({ children }) => {
       {/* Sidebar */}
       <Sidebar
         collapsed={collapsed}
-        toggleSidebar={() => setCollapsed(!collapsed)}
+        toggleSidebar={() =>
+          setCollapsed(!collapsed)
+        }
       />
 
       {/* Main */}
       <div className="flex-1 flex flex-col">
 
         {/* Header */}
-        <Header toggleSidebar={() => setCollapsed(!collapsed)} />
+        <Header
+          toggleSidebar={() =>
+            setCollapsed(!collapsed)
+          }
+        />
 
-        {/* Content */}
+        {/* CONTENT */}
         <div className="flex-1 overflow-y-auto p-2">
-          {children}
+
+          <Outlet />
+
         </div>
 
       </div>
