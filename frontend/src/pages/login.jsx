@@ -43,9 +43,9 @@ const Login = () => {
     if (user.role === "superadmin") {
       navigate("/dashboard/superadmin");
     } else if (user.role === "admin") {
-      navigate("/admin/dashboard");
+      navigate("/dashboard/admin");
     } else {
-      navigate("/user/dashboard");
+      navigate("/dashboard/user");
     }
 
   } catch (error) {
