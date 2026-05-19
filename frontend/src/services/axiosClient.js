@@ -2,7 +2,7 @@ import { createAxiosClient } from "./axiosConfig";
 import { jwtDecode } from "jwt-decode";
 
 // const BASE_URL = "http://localhost:9000/api/v1/";
-const BASE_URL = "http://localhost:5000/api/v1/";
+const BASE_URL = "https://api.bioindication.in/api/v1/";
 
 export function getCurrentAccessToken() {
   return localStorage.getItem("accessToken");
