@@ -160,7 +160,7 @@ useEffect(() => {
     user: [
       {
         title: "My Devices",
-        value: "5",
+        value: "1",
         percentage: "+1%",
         icon: <Cpu size={18} />,
         iconBg: "#6366f1",
@@ -169,7 +169,7 @@ useEffect(() => {
       },
       {
         title: "Active Devices",
-        value: "4",
+        value: "1",
         percentage: "+2%",
         icon: <Activity size={18} />,
         iconBg: "#10b981",
@@ -178,7 +178,7 @@ useEffect(() => {
       },
       {
         title: "Alerts",
-        value: "1",
+        value: "0s",
         percentage: "-1%",
         icon: <AlertTriangle size={18} />,
         iconBg: "#ef4444",

@@ -8,7 +8,7 @@ function Device() {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "http://10.76.78.23:5000/api/v1/data/latest"
+        "https://api.bioindication.in/api/v1/data",
       );
 
       setData(response.data.data || []);
@@ -25,7 +25,7 @@ function Device() {
     // auto refresh every 5 sec
     const interval = setInterval(() => {
       fetchData();
-    },1000);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);
@@ -48,23 +48,83 @@ function Device() {
               </tr>
             </thead>
 
-           <tbody>
-  {data ? (
-    <tr className="border-b hover:bg-gray-50">
-      <td className="p-3">{data.deviceId}</td>
-      <td className="p-3">{data.flow}</td>
-      <td className="p-3">{data.volume}</td>
-      <td className="p-3">
-        {new Date(data.timestamp).toLocaleString()}
-      </td>
-    </tr>
+            {/* <tbody>
+              {data ? (
+                <tr className="border-b hover:bg-gray-50">
+                  <td className="p-3">{data.deviceId}</td>
+                  <td className="p-3">{data.flow}</td>
+                  <td className="p-3">{data.volume}</td>
+                  <td className="p-3">
+                    {new Date(data.timestamp).toLocaleString()}
+                  </td>
+                </tr>
+              ) : (
+                <tr>
+                  <td colSpan="4" className="p-3 text-center">
+                    No data found
+                  </td>
+                </tr>
+              )}
+            </tbody> */}
+
+            <tbody>
+
+  {data.length > 0 ? (
+
+    data.map((item, index) => (
+
+      <tr
+        key={index}
+        className="border-b hover:bg-gray-50"
+      >
+
+        <td className="p-3">
+
+          {item.deviceId}
+
+        </td>
+
+        <td className="p-3">
+
+          {item.flow}
+
+        </td>
+
+        <td className="p-3">
+
+          {item.volume}
+
+        </td>
+
+        <td className="p-3">
+
+          {new Date(
+            item.createdAt
+          ).toLocaleString()}
+
+        </td>
+
+      </tr>
+
+    ))
+
   ) : (
+
     <tr>
-      <td colSpan="4" className="p-3 text-center">
+
+      <td
+        colSpan="4"
+        className="p-3 text-center"
+      >
+
         No data found
+
       </td>
+
     </tr>
+
   )}
+
 </tbody>
           </table>
         </div>

@@ -20,6 +20,7 @@ import Profile from "./pages/common/Profile";
 import Users from "./pages/superadmin/Users";
 import SuperAdminDashboard from "./pages/superadmin/Dashboard";
 import Device from "./pages/superadmin/Device";
+import CommonDevice from "./pages/common/Device";
 
 // ADMIN
 import AdminDashboard from "./pages/admin/Dashboard";
@@ -28,6 +29,11 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import UserDashboard from "./pages/user/Dashboard";
 
 import Permissions from "./pages/superadmin/Permissions";
+
+import LiveDevice from "./pages/superadmin/LiveDevice";
+import LiveMonitoring from "./pages/superadmin/LiveMonitoring";
+
+import MyDevices from "./pages/user/MyDevices";
 
 // ================= PROTECTED ROUTE =================
 
@@ -74,12 +80,29 @@ function App() {
           {/* USER DASHBOARD */}
           <Route path="user" element={<UserDashboard />} />
 
+          <Route path="permissions" element={<Permissions />} />
+
+
           <Route
-  path="permissions"
-  element={<Permissions />}
+  path="live-monitoring"
+  element={<LiveMonitoring />}
 />
 
-          
+<Route
+  path="live-monitoring/:deviceId"
+  element={<LiveDevice />}
+/>
+
+<Route
+  path="user/devices"
+  element={<MyDevices />}
+/>
+
+{/* 
+          <Route
+  path="devices"
+  element={<CommonDevice />}
+/> */}
         </Route>
       </Routes>
     </Router>

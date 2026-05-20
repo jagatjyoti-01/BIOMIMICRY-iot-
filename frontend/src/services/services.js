@@ -91,3 +91,40 @@ export function getSensorAnalytics() {
     "/data/analytics"
   );
 }
+
+
+// ================= LIVE SENSOR DATA =================
+
+// get all sensor data
+export function getSensorData() {
+
+  return client.get("/data");
+
+}
+
+// get latest sensor data
+export function getLatestSensorData() {
+
+  return client.get("/data/latest");
+
+}
+
+
+export function getSensorDataByDeviceId(
+  deviceId
+) {
+
+  return client.get(
+    `/data/device/${deviceId}`
+  );
+
+}
+
+
+export function getMyDevices() {
+
+  return client.get(
+    "/devices/my-devices"
+  );
+
+}

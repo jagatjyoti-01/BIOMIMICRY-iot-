@@ -39,7 +39,7 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
         { name: "Devices", icon: Cpu, path: "/dashboard/devices" },
       ],
       monitoring: [
-        { name: "Live Monitoring", icon: Cpu, path: "/dashboard/live" },
+        { name: "Live Monitoring", icon: Cpu, path: "/dashboard/live-monitoring" },
         { name: "Alerts", icon: AlertTriangle, path: "/dashboard/alerts" },
         { name: "Analytics", icon: BarChart3, path: "/dashboard/analytics" },
         { name: "Reports", icon: FileText, path: "/dashboard/reports" },
@@ -64,10 +64,10 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
     user: {
       label: "User Panel",
       subLabel: "My Devices",
-      dashboard: "/user/dashboard",
+      dashboard: "/dashboard/usera",
       management: [],
       monitoring: [
-        { name: "My Devices", icon: Cpu, path: "/user/devices" },
+        { name: "My Devices", icon: Cpu, path: "user/devices" },
         { name: "Alerts", icon: AlertTriangle, path: "/user/alerts" },
       ],
     },
