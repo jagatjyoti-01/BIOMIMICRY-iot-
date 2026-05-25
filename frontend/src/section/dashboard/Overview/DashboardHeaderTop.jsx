@@ -55,14 +55,15 @@ const DashboardHeaderTop = () => {
       case "user":
         return (
           <>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium">
+            <button onClick={()=>navigate("/dashboard/user/devices")} className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-md text-sm font-medium">
               View Devices
             </button>
 
-            <button className="border border-gray-300 px-4 py-2 rounded-md text-sm font-medium">
-              Download Report
+            <button onClick={()=>navigate("/dashboard/download-report")} className="border cursor-pointer border-gray-300 px-4 py-2 rounded-md text-sm font-medium">
+             Download Report
             </button>
           </>
+         
         );
 
       default:

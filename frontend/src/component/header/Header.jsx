@@ -34,8 +34,7 @@ const Header = ({ toggleSidebar }) => {
         </button>
 
         {/* Search */}
-        <div className="flex items-center bg-gray-100 px-3 py-2 rounded-lg w-80">
-          <Search size={16} className="text-gray-400" />
+      <div className="hidden sm:flex items-center bg-gray-100 px-3 py-2 rounded-lg w-full max-w-md">
 
           <input
             type="text"

@@ -89,7 +89,13 @@ const Login = () => {
         {/* Logo */}
         {/* <h1 className="text-2xl font-bold mb-6">IHS</h1> */}
 
-        <div className="w-full max-w-md">
+       <form
+  onSubmit={(e) => {
+    e.preventDefault();
+    handleLogin();
+  }}
+  className="w-full max-w-md"
+>
 
           <h2 className="text-3xl font-bold mb-2">
             Bioindication<span className="opacity-70">TECH</span>
@@ -147,9 +153,9 @@ const Login = () => {
           </p>
 
           {/* Login Button */}
-          <button
-            onClick={handleLogin}
-            className="w-full bg-red-600 text-white py-3 rounded-lg font-semibold"
+         <button
+  type="submit"
+            className="w-full bg-red-600 text-white py-3 rounded-lg font-semibold cursor-pointer hover:bg-red-700 transition"
           >
             LOGIN
           </button>
@@ -166,7 +172,7 @@ const Login = () => {
             {/* <p>Doctor: doctor@doctor.com / doctor123</p> */}
             <p>user: usefr3@test.com / 12345326</p>
           </div>
-        </div>
+       </form>
       </div>
 
       {/* 🌙☀️ Floating Toggle Button */}

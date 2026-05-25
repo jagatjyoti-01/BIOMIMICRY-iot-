@@ -1,4 +1,3 @@
-
 import DashboardHeaderTop from "../../section/dashboard/Overview/DashboardHeaderTop";
 import StatsCard from "../../section/dashboard/Overview/StatsGrid";
 import DeviceActivity from "../../section/dashboard/Overview/DeviceActivity";
@@ -11,57 +10,48 @@ import DeviceTable from "../../section/dashboard/Overview/DeviceTable";
 import UserParameterChart from "../../section/dashboard/User/UserParameterChart";
 import DownloadReport from "../../section/dashboard/User/DownloadReport";
 import WaterFlowChart from "../../section/dashboard/User/WaterFlowChart";
+import MyDevices from "../user/MyDevices";
 
 const UserDashboard = () => {
   return (
-   <>
-      <div className="p-6 bg-gray-100 min-h-screen">
-
+    <>
+      <div className="p-6 bg-gray-100 ">
         {/* Header */}
-        <DashboardHeaderTop />
-
-        {/* Stats */}
+        <DashboardHeaderTop />{/* Stats */}
         <StatsCard />
-
         {/* Middle */}
-        <div className="flex gap-6 mt-6">
+        {/* <div className="flex gap-6 mt-6">
           <div className="flex-1">
             <DeviceActivity />
             <RecentAlerts />
           </div>
 
           <SystemStatusPanel />
-        </div>
-
+        </div> */}
         {/* Bottom */}
-        <div className="grid grid-cols-12 gap-6 mt-6">
+        {/* <div className="grid grid-cols-12 gap-6 mt-6">
+          <div className="col-span-12 lg:col-span-6">
+            <WaterQualityChart />
+          </div>
 
-  <div className="col-span-12 lg:col-span-6">
-    <WaterQualityChart />
-  </div>
-
-  <div className="col-span-12 lg:col-span-6">
-    <WaterFlowChart />
-  </div>
-
-</div>
-
+          <div className="col-span-12 lg:col-span-6">
+            <WaterFlowChart />
+          </div>
+        </div> */}
         {/* Table */}
-        <DeviceTable />
-
+        {/* <DeviceTable /> */}
+       < MyDevices />
       </div>
 
-      <div className="grid grid-cols-12 gap-6 mt-6">
+      <div className=" mt-6">
+        <div className="col-span-12 lg:col-span-8">
+          <UserParameterChart />
+        </div>
 
-  <div className="col-span-12 lg:col-span-8">
-    <UserParameterChart />
-  </div>
-
-  <div className="col-span-12 lg:col-span-4">
-    <DownloadReport />
-  </div>
-
-</div>
+        {/* <div className="col-span-12 lg:col-span-4">
+          <DownloadReport />
+        </div> */}
+      </div>
     </>
   );
 };

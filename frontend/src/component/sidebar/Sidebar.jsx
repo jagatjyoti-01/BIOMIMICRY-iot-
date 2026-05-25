@@ -9,13 +9,16 @@ import {
   FileText,
   ChevronDown,
   ChevronRight,
+  ChevronLeft,
+  X,
 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const Sidebar = ({ collapsed, toggleSidebar }) => {
+const Sidebar = ({ collapsed, isMobileOpen, closeSidebar, toggleSidebar }) => {
   const [openDashboard, setOpenDashboard] = useState(true);
+  const isCollapsed = isMobileOpen ? false : collapsed;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -35,11 +38,11 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
       management: [
         //{ name: "Organizations", icon: Building, path: "/dashboard/orgs" },
         { name: "Users", icon: Users, path: "/dashboard/users" },
-        {
-          name: "Roles & Permissions",
-          icon: Users,
-          path: "/dashboard/permissions",
-        },
+        // {
+        //   name: "Roles & Permissions",
+        //   icon: Users,
+        //   path: "/dashboard/permissions",
+        // },
         { name: "Devices", icon: Cpu, path: "/dashboard/devices" },
       ],
       monitoring: [
@@ -48,9 +51,9 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
           icon: Cpu,
           path: "/dashboard/live-monitoring",
         },
-        { name: "Alerts", icon: AlertTriangle, path: "/dashboard/alerts" },
-        { name: "Analytics", icon: BarChart3, path: "/dashboard/analytics" },
-        { name: "Reports", icon: FileText, path: "/dashboard/reports" },
+        { name: "Download Report", icon: AlertTriangle, path: "download-report" },
+        // { name: "Analytics", icon: BarChart3, path: "/dashboard/analytics" },
+        // { name: "Reports", icon: FileText, path: "/dashboard/reports" },
       ],
     },
 
@@ -76,28 +79,32 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
       management: [],
       monitoring: [
         { name: "My Devices", icon: Cpu, path: "user/devices" },
-        { name: "Alerts", icon: AlertTriangle, path: "/user/alerts" },
+        { name: "Download Report", icon: AlertTriangle, path: "download-report" },
       ],
     },
   };
 
   const config = menuConfig[role];
 
+  const sidebarWidth = isCollapsed ? "md:w-20" : "md:w-64";
+  const sidebarTransform = isMobileOpen ? "translate-x-0" : "-translate-x-full";
+  const sidebarWidthMobile = isMobileOpen ? "w-64" : "w-0";
+  const SidebarIcon = isMobileOpen ? X : isCollapsed ? ChevronRight : ChevronLeft;
+  const onSidebarButtonClick = isMobileOpen ? closeSidebar : toggleSidebar;
+
   return (
     <div
-      className={`h-full bg-white border-r border-gray-200 transition-all duration-300 ${
-        collapsed ? "w-20" : "w-64"
-      }`}
+      className={`fixed inset-y-0 left-0 z-50 flex flex-col overflow-hidden bg-white border-r border-gray-200 shadow-xl transition-all duration-300 ease-in-out ${sidebarWidthMobile} ${sidebarWidth} ${sidebarTransform} md:static md:translate-x-0 md:shadow-none`}
     >
       {/* TOP */}
       <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
-        {!collapsed && <h2 className="font-bold text-lg">Bioindicators</h2>}
+        {!isCollapsed && <h2 className="font-bold text-lg">Bioindicators</h2>}
 
         <button
-          onClick={toggleSidebar}
+          onClick={onSidebarButtonClick}
           className="p-2 hover:bg-gray-100 rounded-full"
         >
-          <ChevronRight size={18} />
+          <SidebarIcon size={18} />
         </button>
       </div>
 
@@ -219,14 +226,14 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
           <p className="text-xs text-gray-400 mt-5 mb-2">SYSTEM</p>
         )}
 
-        <Link to="/devices">
+        {/* <Link to="/devices">
           <div className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 cursor-pointer">
             <div className="flex items-center gap-3">
               <Settings size={18} />
               {!collapsed && <span>Device</span>}
             </div>
           </div>
-        </Link>
+        </Link> */}
 
         <div className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 cursor-pointer">
           <div className="flex items-center gap-3">

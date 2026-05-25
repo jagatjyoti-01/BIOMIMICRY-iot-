@@ -35,6 +35,7 @@ function Device() {
     deviceId: "",
     deviceName: "",
     status: "active",
+     location: "",
   });
 
   const [openEdit, setOpenEdit] = useState(false);
@@ -46,7 +47,7 @@ function Device() {
     userId: "",
     status: "",
     location: "",
-    isActive:""
+    isActive: "",
   });
 
   // ================= FETCH USERS =================
@@ -59,7 +60,7 @@ function Device() {
       userId: device.userId,
       status: device.status,
       location: device.location,
-      isActive: device.isActive
+      isActive: device.isActive,
     });
 
     setOpenEdit(true);
@@ -140,6 +141,7 @@ function Device() {
         deviceId: "",
         deviceName: "",
         status: "active",
+         location: "",
       });
 
       setSelectedUser(null);
@@ -180,94 +182,78 @@ function Device() {
       renderCell: (params) => <span>{params.row.location || "-"}</span>,
     },
 
+    // {
+    //   field: "status",
+    //   headerName: "Status",
+    //   width: 120,
+
+    //   renderCell: (params) => (
+    //     <span
+    //       className={`px-3 py-1 rounded-full text-xs capitalize mt-2 inline-block
+    //       ${
+    //         params.row.status === "active"
+    //           ? "bg-green-100 text-green-700"
+    //           : "bg-red-100 text-red-700"
+    //       }`}
+    //     >
+    //       {params.row.status}
+    //     </span>
+    //   ),
+    // },
+
     {
-      field: "status",
-      headerName: "Status",
-      width: 120,
+      field: "createdAt",
+      headerName: "Created At",
+      flex: 1,
+
+      renderCell: (params) => {
+        return new Date(params.row.createdAt).toLocaleString();
+      },
+    },
+    {
+      field: "updatedAt",
+      headerName: "Updated At",
+      flex: 1,
+
+      renderCell: (params) => {
+        return new Date(params.row.updatedAt).toLocaleString();
+      },
+    },
+
+    {
+      field: "isActive",
+      headerName: "Health Status",
+      width: 160,
 
       renderCell: (params) => (
         <span
-          className={`px-3 py-1 rounded-full text-xs capitalize mt-2 inline-block
-          ${
-            params.row.status === "active"
-              ? "bg-green-100 text-green-700"
-              : "bg-red-100 text-red-700"
-          }`}
+          className={`px-3 py-1 rounded-full text-xs mt-2 inline-block
+
+      ${
+        params.row.isActive
+          ? "bg-green-100 text-green-700"
+          : "bg-red-100 text-red-700"
+      }`}
         >
-          {params.row.status}
+          {params.row.isActive ? "Active" : "Inactive"}
         </span>
       ),
     },
 
-   {
-  field: "createdAt",
-  headerName: "Created At",
-  flex: 1,
-
-  renderCell: (params) => {
-
-    return new Date(
-      params.row.createdAt
-    ).toLocaleString();
-
-  },
-},
     {
-  field: "updatedAt",
-  headerName: "Updated At",
-  flex: 1,
+      field: "actions",
+      headerName: "Actions",
+      width: 120,
 
-  renderCell: (params) => {
-
-    return new Date(
-      params.row.updatedAt
-    ).toLocaleString();
-
-  },
-},
-
-   {
-  field: "isActive",
-  headerName: "Health Status",
-  width: 160,
-
-  renderCell: (params) => (
-
-    <span
-      className={`px-3 py-1 rounded-full text-xs mt-2 inline-block
-
-      ${
-        params.row.isActive
-
-          ? "bg-green-100 text-green-700"
-
-          : "bg-red-100 text-red-700"
-      }`}
-    >
-
-      {params.row.isActive
-        ? "Active"
-        : "Inactive"}
-
-    </span>
-
-  ),
-},
-
-   {
-  field: "actions",
-  headerName: "Actions",
-  width: 120,
-
-  renderCell: (params) => (
-    <button
-      className="bg-blue-600 text-white px-3 py-1 cursor-pointer rounded text-xs mt-2"
-      onClick={() => handleEdit(params.row)}
-    >
-      Edit
-    </button>
-  ),
-}
+      renderCell: (params) => (
+        <button
+          className="bg-blue-600 text-white px-3 py-1 cursor-pointer rounded text-xs mt-2"
+          onClick={() => handleEdit(params.row)}
+        >
+          Edit
+        </button>
+      ),
+    },
   ];
 
   return (
@@ -331,13 +317,12 @@ function Device() {
             <MenuItem value="inactive">Inactive</MenuItem>
           </TextField>
 
-
         <TextField
   label="Location"
   name="location"
   size="small"
-  value={editData.location}
-  onChange={handleEditChange}
+  value={formData.location}
+  onChange={handleChange}
   fullWidth
 />
 
@@ -409,118 +394,92 @@ function Device() {
         </div>
       </Paper>
 
-     <Dialog
-  open={openEdit}
-  onClose={() => setOpenEdit(false)}
-  maxWidth="sm"
-  fullWidth
->
-
-  <DialogTitle>
-    Edit Device
-  </DialogTitle>
-
-  <DialogContent>
-
-    <div className="grid grid-cols-1 gap-4 mt-2">
-
-      {/* DEVICE ID */}
-      <TextField
-        label="Device ID"
-        name="deviceId"
-        size="small"
-        value={editData.deviceId}
-        onChange={handleEditChange}
-        fullWidth
-      />
-
-      {/* DEVICE NAME */}
-      <TextField
-        label="Device Name"
-        name="deviceName"
-        size="small"
-        value={editData.deviceName}
-        onChange={handleEditChange}
-        fullWidth
-      />
-
-      {/* LOCATION */}
-      <TextField
-        label="Location"
-        name="location"
-        size="small"
-        value={editData.location}
-        onChange={handleEditChange}
-        fullWidth
-      />
-
-      {/* STATUS */}
-      <TextField
-        select
-        label="Status"
-        name="status"
-        size="small"
-        value={editData.status}
-        onChange={handleEditChange}
+      <Dialog
+        open={openEdit}
+        onClose={() => setOpenEdit(false)}
+        maxWidth="sm"
         fullWidth
       >
+        <DialogTitle>Edit Device</DialogTitle>
 
-        <MenuItem value="online">
-          Online
-        </MenuItem>
+        <DialogContent>
+          <div className="grid grid-cols-1 gap-4 mt-2">
+            {/* DEVICE ID */}
+            <TextField
+              label="Device ID"
+              name="deviceId"
+              size="small"
+              value={editData.deviceId}
+              onChange={handleEditChange}
+              fullWidth
+            />
 
-        <MenuItem value="offline">
-          Offline
-        </MenuItem>
+            {/* DEVICE NAME */}
+            <TextField
+              label="Device Name"
+              name="deviceName"
+              size="small"
+              value={editData.deviceName}
+              onChange={handleEditChange}
+              fullWidth
+            />
 
-      </TextField>
+            {/* LOCATION */}
+            <TextField
+              label="Location"
+              name="location"
+              size="small"
+              value={editData.location}
+              onChange={handleEditChange}
+              fullWidth
+            />
 
-      {/* HEALTH STATUS */}
-      <TextField
-        select
-        label="Health Status"
-        name="isActive"
-        size="small"
-        value={editData.isActive}
-        onChange={handleEditChange}
-        fullWidth
-      >
+            {/* STATUS */}
+            <TextField
+              select
+              label="Status"
+              name="status"
+              size="small"
+              value={editData.status}
+              onChange={handleEditChange}
+              fullWidth
+            >
+              <MenuItem value="online">Online</MenuItem>
 
-        <MenuItem value={true}>
-          Active
-        </MenuItem>
+              <MenuItem value="offline">Offline</MenuItem>
+            </TextField>
 
-        <MenuItem value={false}>
-          Inactive
-        </MenuItem>
+            {/* HEALTH STATUS */}
+            <TextField
+              select
+              label="Health Status"
+              name="isActive"
+              size="small"
+              value={editData.isActive}
+              onChange={handleEditChange}
+              fullWidth
+            >
+              <MenuItem value={true}>Active</MenuItem>
 
-      </TextField>
+              <MenuItem value={false}>Inactive</MenuItem>
+            </TextField>
+          </div>
+        </DialogContent>
 
-    </div>
+        <DialogActions>
+          <Button onClick={() => setOpenEdit(false)}>Cancel</Button>
 
-  </DialogContent>
-
-  <DialogActions>
-
-    <Button
-      onClick={() => setOpenEdit(false)}
-    >
-      Cancel
-    </Button>
-
-    <Button
-      variant="contained"
-      onClick={handleUpdate}
-      sx={{
-        backgroundColor: "#1565c0",
-      }}
-    >
-      Update
-    </Button>
-
-  </DialogActions>
-
-</Dialog>
+          <Button
+            variant="contained"
+            onClick={handleUpdate}
+            sx={{
+              backgroundColor: "#1565c0",
+            }}
+          >
+            Update
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

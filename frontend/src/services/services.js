@@ -125,6 +125,23 @@ export function getSensorDataByDeviceId(
 }
 
 
+export function downloadSensorReport(
+  params
+) {
+
+  return client.get(
+
+    "/reports/sensor-report",
+
+    {
+      params,
+    }
+
+  );
+
+}
+
+
 export function getMyDevices() {
 
   return client.get(

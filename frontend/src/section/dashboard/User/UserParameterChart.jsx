@@ -1,196 +1,485 @@
+import React, {
+  useEffect,
+  useState,
+} from "react";
+
 import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  Tooltip,
+
   ResponsiveContainer,
+
+  LineChart,
+
+  Line,
+
+  XAxis,
+
+  YAxis,
+
+  Tooltip,
+
+  CartesianGrid,
+
+  Legend,
+
 } from "recharts";
-import { useEffect, useState } from "react";
 
-// 🔥 Generate Zig-Zag Data
-const generateData = () => {
-  const now = new Date();
+import {
 
-  return Array.from({ length: 12 }).map((_, i) => {d
-    const base = Math.sin(i / 2) * 10;
+  getMyDevices,
 
-    return {
-      time: new Date(now.getTime() - (11 - i) * 60000).toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+  getSensorDataByDeviceId,
 
-      ph: +(7 + Math.sin(i / 2) * 0.3 + Math.random() * 0.2).toFixed(2),
-      tds: Math.floor(300 + base * 5 + Math.random() * 20),
-      turbidity: +(2 + Math.sin(i / 1.5) * 1.5 + Math.random()).toFixed(1),
-      chlorine: +(0.5 + Math.sin(i / 2) * 0.2 + Math.random() * 0.1).toFixed(2),
-      power: +(10 + Math.sin(i / 1.8) * 3 + Math.random()).toFixed(1),
-    };
-  });
-};
+} from "../../../services/services";
 
 const UserParameterChart = () => {
-  const [data, setData] = useState(generateData());
 
-  const [visible, setVisible] = useState({
-    ph: true,
-    tds: false,
-    turbidity: true,
-    chlorine: true,
-    power: true,
-  });
+  // ================= STATE =================
 
-  const status = "active";
+  const [devices, setDevices] =
+    useState([]);
 
-  // 🔥 Live Update
+  const [selectedDevice, setSelectedDevice] =
+    useState("");
+
+  const [chartData, setChartData] =
+    useState([]);
+
+  const [latest, setLatest] =
+    useState(null);
+
+  const [status, setStatus] =
+    useState("offline");
+
+  // ================= SENSOR FIELDS =================
+
+  const sensorFields = [
+
+    {
+      key: "flow",
+      label: "Flow",
+      color: "#2563eb",
+    },
+
+    {
+      key: "volume",
+      label: "Volume",
+      color: "#16a34a",
+    },
+
+    {
+      key: "cumulativeVolume",
+      label:
+        "Cumulative Volume",
+      color: "#9333ea",
+    },
+
+    {
+      key: "ph",
+      label: "PH",
+      color: "#f59e0b",
+    },
+
+    {
+      key: "cod",
+      label: "COD",
+      color: "#dc2626",
+    },
+
+    {
+      key: "bod",
+      label: "BOD",
+      color: "#0891b2",
+    },
+
+    {
+      key: "turbidity",
+      label:
+        "Turbidity",
+      color: "#7c3aed",
+    },
+
+    {
+      key:
+        "powerConsumption",
+      label: "Power",
+      color: "#ea580c",
+    },
+
+  ];
+
+  // ================= FETCH DEVICES =================
+
+  const fetchDevices =
+    async () => {
+
+      try {
+
+        const response =
+          await getMyDevices();
+
+        const deviceList =
+          response.data.data || [];
+
+        setDevices(
+          deviceList
+        );
+
+        // DEFAULT DEVICE
+        if (
+          deviceList.length > 0
+        ) {
+
+          setSelectedDevice(
+
+            deviceList[0]
+              .deviceId
+
+          );
+
+        }
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+
+  // ================= FETCH SENSOR DATA =================
+
+  const fetchSensorData =
+    async () => {
+
+      try {
+
+        if (
+          !selectedDevice
+        ) return;
+
+        const response =
+          await getSensorDataByDeviceId(
+            selectedDevice
+          );
+
+        const sensorData =
+          response.data.data || [];
+
+        const latest20 =
+          sensorData
+            .slice(0, 20)
+            .reverse();
+
+        // GRAPH DATA
+        const formatted =
+          latest20.map(
+            (item) => ({
+
+              time:
+                new Date(
+                  item.createdAt
+                ).toLocaleTimeString(),
+
+              flow:
+                item.flow,
+
+              volume:
+                item.volume,
+
+              cumulativeVolume:
+                item.cumulativeVolume,
+
+              ph:
+                item.ph,
+
+              cod:
+                item.cod,
+
+              bod:
+                item.bod,
+
+              turbidity:
+                item.turbidity,
+
+              powerConsumption:
+                item.powerConsumption,
+
+            })
+          );
+
+        setChartData(
+          formatted
+        );
+
+        // LATEST DATA
+        if (
+          sensorData.length > 0
+        ) {
+
+          const latestData =
+            sensorData[0];
+
+          setLatest(
+            latestData
+          );
+
+          // STATUS
+          const currentTime =
+            new Date();
+
+          const lastDataTime =
+            new Date(
+              latestData.createdAt
+            );
+
+          const diffSeconds =
+            (
+              currentTime -
+              lastDataTime
+            ) / 1000;
+
+          setStatus(
+
+            diffSeconds <= 10
+
+              ? "online"
+
+              : "offline"
+
+          );
+
+        }
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+    };
+
+  // ================= LOAD =================
+
   useEffect(() => {
-    let i = 0;
 
-    const interval = setInterval(() => {
-      const base = Math.sin(i / 2) * 10;
+    fetchDevices();
 
-      const newPoint = {
-        time: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-
-        ph: +(7 + Math.sin(i / 2) * 0.3 + Math.random() * 0.2).toFixed(2),
-        tds: Math.floor(300 + base * 5 + Math.random() * 20),
-        turbidity: +(2 + Math.sin(i / 1.5) * 1.5 + Math.random()).toFixed(1),
-        chlorine: +(0.5 + Math.sin(i / 2) * 0.2 + Math.random() * 0.1).toFixed(2),
-        power: +(10 + Math.sin(i / 1.8) * 3 + Math.random()).toFixed(1),
-      };
-
-      setData((prev) => [...prev.slice(1), newPoint]);
-      i++;
-    }, 2000);
-
-    return () => clearInterval(interval);
   }, []);
 
-  const toggle = (key) => {
-    setVisible((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
+  // ================= AUTO REFRESH =================
+
+  useEffect(() => {
+
+    fetchSensorData();
+
+    const interval =
+      setInterval(() => {
+
+        fetchSensorData();
+
+      }, 3000);
+
+    return () =>
+      clearInterval(interval);
+
+  }, [selectedDevice]);
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm">
 
-      {/* 🔥 TOP SECTION */}
-      <div className="flex justify-between items-center mb-5">
+    <div className="space-y-6">
 
-        <div>
-          <h2 className="text-lg font-semibold text-gray-800">
-            Device: DEV-001
-          </h2>
+      {/* SELECT DEVICE */}
+      <div className="bg-white rounded-xl p-5 shadow">
 
-          <div className="flex items-center gap-3 mt-1">
+        <div className="flex justify-between items-center flex-wrap gap-4">
 
-            {/* STATUS */}
-            <div className="flex items-center gap-2">
-              <span
-                className={`w-2.5 h-2.5 rounded-full ${
-                  status === "active"
-                    ? "bg-green-500 animate-pulse"
-                    : "bg-red-500"
-                }`}
-              />
-              <span className="text-xs text-gray-500">
-                {status === "active" ? "Active" : "Offline"}
-              </span>
-            </div>
+          <div>
 
-            {/* DATE */}
-            <span className="text-xs text-gray-400">
-              {new Date().toLocaleString()}
-            </span>
+            <h2 className="text-lg font-semibold">
+
+              My Device Monitoring
+
+            </h2>
+
+            <p className="text-sm text-gray-500 mt-1">
+
+              Select device for realtime analytics
+
+            </p>
 
           </div>
+
+          {/* DROPDOWN */}
+          <select
+            value={
+              selectedDevice
+            }
+            onChange={(e) =>
+              setSelectedDevice(
+                e.target.value
+              )
+            }
+            className="border border-gray-300 rounded-lg px-4 py-2 outline-none"
+          >
+
+            {devices.map(
+              (device) => (
+
+                <option
+                  key={
+                    device.id
+                  }
+                  value={
+                    device.deviceId
+                  }
+                >
+
+                  {
+                    device.deviceName
+                  }
+                  {" - "}
+                  {
+                    device.deviceId
+                  }
+
+                </option>
+
+              )
+            )}
+
+          </select>
+
         </div>
 
-        <span className="text-xs bg-gray-100 px-3 py-1 rounded-md">
-          Live
+      </div>
+
+      {/* STATUS */}
+      <div className="flex items-center gap-3">
+
+        <span
+          className={`w-3 h-3 rounded-full
+
+          ${
+            status ===
+            "online"
+
+              ? "bg-green-500 animate-pulse"
+
+              : "bg-red-500"
+          }`}
+        />
+
+        <span className="font-medium capitalize">
+
+          {status}
+
         </span>
+
       </div>
 
-      {/* 🔥 TOGGLE BUTTONS */}
-      <div className="flex gap-2 mb-4 flex-wrap">
+      {/* LIVE CARDS */}
+      {latest && (
 
-        {[
-          { key: "ph", label: "pH", color: "bg-blue-500" },
-          { key: "tds", label: "TDS", color: "bg-yellow-500" },
-          { key: "turbidity", label: "Turbidity", color: "bg-red-500" },
-          { key: "chlorine", label: "Chlorine", color: "bg-indigo-500" },
-          { key: "power", label: "Power", color: "bg-green-500" },
-        ].map((item) => (
-          <button
-            key={item.key}
-            onClick={() => toggle(item.key)}
-            className={`text-xs px-3 py-1 rounded-full flex items-center gap-2 transition ${
-              visible[item.key]
-                ? `${item.color} text-white`
-                : "bg-gray-100 text-gray-500"
-            }`}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+
+          {sensorFields.map(
+            (field) => (
+
+              <div
+                key={field.key}
+                className="bg-white rounded-xl p-5 shadow"
+              >
+
+                <p className="text-sm text-gray-500">
+
+                  {field.label}
+
+                </p>
+
+                <h2
+                  className="text-2xl font-bold mt-2"
+                  style={{
+                    color:
+                      field.color,
+                  }}
+                >
+
+                  {latest[
+                    field.key
+                  ] ?? "-"}
+
+                </h2>
+
+              </div>
+
+            )
+          )}
+
+        </div>
+
+      )}
+
+      {/* GRAPH */}
+      <div className="bg-white rounded-xl p-5 shadow">
+
+        <h2 className="font-semibold text-lg mb-5">
+
+          Live Analytics
+
+        </h2>
+
+        <ResponsiveContainer
+          width="100%"
+          height={400}
+        >
+
+          <LineChart
+            data={chartData}
           >
-            <span className="w-2 h-2 bg-white rounded-full" />
-            {item.label}
-          </button>
-        ))}
+
+            <CartesianGrid
+              strokeDasharray="3 3"
+            />
+
+            <XAxis
+              dataKey="time"
+            />
+
+            <YAxis />
+
+            <Tooltip />
+
+            <Legend />
+
+            {sensorFields.map(
+              (field) => (
+
+                <Line
+                  key={field.key}
+                  type="monotone"
+                  dataKey={
+                    field.key
+                  }
+                  stroke={
+                    field.color
+                  }
+                  strokeWidth={2}
+                  dot={false}
+                />
+
+              )
+            )}
+
+          </LineChart>
+
+        </ResponsiveContainer>
 
       </div>
-
-      {/* 🔥 GRAPH */}
-      <ResponsiveContainer width="100%" height={320}>
-        <AreaChart data={data}>
-
-          {/* Gradients */}
-          <defs>
-            <linearGradient id="ph" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.4}/>
-              <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
-            </linearGradient>
-
-            <linearGradient id="tds" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.4}/>
-              <stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/>
-            </linearGradient>
-
-            <linearGradient id="turbidity" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#ef4444" stopOpacity={0.4}/>
-              <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
-            </linearGradient>
-
-            <linearGradient id="chlorine" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#6366f1" stopOpacity={0.4}/>
-              <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
-            </linearGradient>
-
-            <linearGradient id="power" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#10b981" stopOpacity={0.4}/>
-              <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-            </linearGradient>
-          </defs>
-
-          <XAxis dataKey="time" tick={{ fontSize: 11 }} />
-          <YAxis tick={{ fontSize: 11 }} />
-
-          <Tooltip />
-
-          {visible.ph && <Area dataKey="ph" stroke="#3b82f6" fill="url(#ph)" />}
-          {visible.tds && <Area dataKey="tds" stroke="#f59e0b" fill="url(#tds)" />}
-          {visible.turbidity && <Area dataKey="turbidity" stroke="#ef4444" fill="url(#turbidity)" />}
-          {visible.chlorine && <Area dataKey="chlorine" stroke="#6366f1" fill="url(#chlorine)" />}
-          {visible.power && <Area dataKey="power" stroke="#10b981" fill="url(#power)" />}
-
-        </AreaChart>
-      </ResponsiveContainer>
 
     </div>
+
   );
+
 };
 
 export default UserParameterChart;

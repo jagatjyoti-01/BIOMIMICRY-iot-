@@ -35,6 +35,8 @@ import LiveMonitoring from "./pages/superadmin/LiveMonitoring";
 
 import MyDevices from "./pages/user/MyDevices";
 
+import DownloadReport from "./pages/common/DownloadReport";
+
 // ================= PROTECTED ROUTE =================
 
 const ProtectedRoute = ({ children }) => {
@@ -96,6 +98,11 @@ function App() {
 <Route
   path="user/devices"
   element={<MyDevices />}
+/>
+
+<Route
+path="download-report"
+element={<DownloadReport />}
 />
 
 {/* 

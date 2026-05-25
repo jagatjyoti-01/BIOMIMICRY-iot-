@@ -145,7 +145,7 @@ const MyDevices = () => {
 
   return (
 
-    <div className="p-6 bg-gray-100 min-h-screen">
+    <div className="p-6 bg-gray-100 ">
 
       {/* HEADER */}
       <div className="mb-6">
