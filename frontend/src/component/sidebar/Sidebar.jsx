@@ -24,7 +24,7 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
 
   // ✅ GET ROLE
   const user = JSON.parse(localStorage.getItem("user") || "{}");
- const role = user.role?.toLowerCase() || "user";
+  const role = user.role?.toLowerCase() || "user";
 
   // ✅ ROLE-BASED MENU CONFIG
   const menuConfig = {
@@ -33,13 +33,21 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
       subLabel: "Global Access",
       dashboard: "/dashboard/superadmin",
       management: [
- //d       { name: "Organizations", icon: Building, path: "/dashboard/orgs" },
+        //{ name: "Organizations", icon: Building, path: "/dashboard/orgs" },
         { name: "Users", icon: Users, path: "/dashboard/users" },
-        { name: "Roles & Permissions", icon: Users, path: "/dashboard/permissions" },
+        {
+          name: "Roles & Permissions",
+          icon: Users,
+          path: "/dashboard/permissions",
+        },
         { name: "Devices", icon: Cpu, path: "/dashboard/devices" },
       ],
       monitoring: [
-        { name: "Live Monitoring", icon: Cpu, path: "/dashboard/live-monitoring" },
+        {
+          name: "Live Monitoring",
+          icon: Cpu,
+          path: "/dashboard/live-monitoring",
+        },
         { name: "Alerts", icon: AlertTriangle, path: "/dashboard/alerts" },
         { name: "Analytics", icon: BarChart3, path: "/dashboard/analytics" },
         { name: "Reports", icon: FileText, path: "/dashboard/reports" },
@@ -64,7 +72,7 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
     user: {
       label: "User Panel",
       subLabel: "My Devices",
-      dashboard: "/dashboard/usera",
+      dashboard: "/dashboard/user",
       management: [],
       monitoring: [
         { name: "My Devices", icon: Cpu, path: "user/devices" },
@@ -83,9 +91,7 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
     >
       {/* TOP */}
       <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
-        {!collapsed && (
-          <h2 className="font-bold text-lg">Bioindicators</h2>
-        )}
+        {!collapsed && <h2 className="font-bold text-lg">Bioindicators</h2>}
 
         <button
           onClick={toggleSidebar}
@@ -110,7 +116,6 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
 
       {/* MENU */}
       <div className="px-3">
-
         {/* MAIN MENU */}
         {!collapsed && (
           <p className="text-xs text-gray-400 mt-3 mb-2">MAIN MENU</p>
@@ -137,25 +142,19 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
         {/* SUBMENU */}
         {openDashboard && !collapsed && (
           <div className="ml-7 mt-2 space-y-2 border-l pl-3">
-
             <div
               onClick={() => navigate(config.dashboard)}
               className={`flex items-center gap-2 cursor-pointer ${
-                isActive(config.dashboard)
-                  ? "text-blue-600"
-                  : "text-gray-500"
+                isActive(config.dashboard) ? "text-blue-600" : "text-gray-500"
               }`}
             >
               <div
                 className={`w-2 h-2 rounded-full ${
-                  isActive(config.dashboard)
-                    ? "bg-blue-600"
-                    : "bg-gray-300"
+                  isActive(config.dashboard) ? "bg-blue-600" : "bg-gray-300"
                 }`}
               />
               <span className="text-sm">Overview</span>
             </div>
-
           </div>
         )}
 
@@ -220,14 +219,14 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
           <p className="text-xs text-gray-400 mt-5 mb-2">SYSTEM</p>
         )}
 
-       <Link to="/devices">
-  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 cursor-pointer">
-    <div className="flex items-center gap-3">
-      <Settings size={18} />
-      {!collapsed && <span>Device</span>}
-    </div>
-  </div>
-</Link>
+        <Link to="/devices">
+          <div className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 cursor-pointer">
+            <div className="flex items-center gap-3">
+              <Settings size={18} />
+              {!collapsed && <span>Device</span>}
+            </div>
+          </div>
+        </Link>
 
         <div className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-100 cursor-pointer">
           <div className="flex items-center gap-3">
@@ -235,7 +234,6 @@ const Sidebar = ({ collapsed, toggleSidebar }) => {
             {!collapsed && <span>Settings</span>}
           </div>
         </div>
-
       </div>
     </div>
   );

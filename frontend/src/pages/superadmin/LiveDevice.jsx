@@ -15,6 +15,7 @@ import {
   Tooltip,
   ResponsiveContainer,
   CartesianGrid,
+  Legend,
 } from "recharts";
 
 import {
@@ -40,9 +41,62 @@ const LiveDevice = () => {
   const [deviceStatus, setDeviceStatus] =
     useState("offline");
 
-  // GRAPH FILTER
- const [activeChart, setActiveChart] =
-  useState("both");
+  const [activeChart, setActiveChart] =
+    useState("all");
+
+  // ================= SENSOR CONFIG =================
+
+  const sensorFields = [
+
+    {
+      key: "flow",
+      label: "Flow",
+      color: "#2563eb",
+    },
+
+    {
+      key: "volume",
+      label: "Volume",
+      color: "#16a34a",
+    },
+
+    {
+      key: "cumulativeVolume",
+      label: "Cumulative Volume",
+      color: "#9333ea",
+    },
+
+    {
+      key: "ph",
+      label: "PH",
+      color: "#f59e0b",
+    },
+
+    {
+      key: "cod",
+      label: "COD",
+      color: "#dc2626",
+    },
+
+    {
+      key: "bod",
+      label: "BOD",
+      color: "#0891b2",
+    },
+
+    {
+      key: "turbidity",
+      label: "Turbidity",
+      color: "#7c3aed",
+    },
+
+    {
+      key: "powerConsumption",
+      label: "Power",
+      color: "#ea580c",
+    },
+
+  ];
 
   // ================= FETCH DATA =================
 
@@ -56,16 +110,16 @@ const LiveDevice = () => {
             deviceId
           );
 
-        const sensorData =
-          response.data.data || [];
+        console.log(response);
 
-        // ONLY LAST 20 ROWS
+        const sensorData =
+          response?.data?.data || [];
+
         const latest20 =
           sensorData.slice(0, 20);
 
         setData(latest20);
 
-        // LATEST DATA
         if (
           latest20.length > 0
         ) {
@@ -76,8 +130,6 @@ const LiveDevice = () => {
           setLatest(
             latestData
           );
-
-          // ================= STATUS CHECK =================
 
           const currentTime =
             new Date();
@@ -93,22 +145,15 @@ const LiveDevice = () => {
               lastDataTime
             ) / 1000;
 
-          // IF DATA WITHIN 10 SEC
-          if (
+          setDeviceStatus(
+
             diffSeconds <= 10
-          ) {
 
-            setDeviceStatus(
-              "online"
-            );
+              ? "online"
 
-          } else {
+              : "offline"
 
-            setDeviceStatus(
-              "offline"
-            );
-
-          }
+          );
 
         }
 
@@ -154,10 +199,29 @@ const LiveDevice = () => {
             item.createdAt
           ).toLocaleTimeString(),
 
-        flow: item.flow,
+        flow:
+          item.flow,
 
         volume:
           item.volume,
+
+        cumulativeVolume:
+          item.cumulativeVolume,
+
+        ph:
+          item.ph,
+
+        cod:
+          item.cod,
+
+        bod:
+          item.bod,
+
+        turbidity:
+          item.turbidity,
+
+        powerConsumption:
+          item.powerConsumption,
 
       }));
 
@@ -166,6 +230,7 @@ const LiveDevice = () => {
     <div className="p-6 bg-gray-100 min-h-screen">
 
       {/* HEADER */}
+
       <div className="flex justify-between items-center mb-6">
 
         <div>
@@ -187,6 +252,7 @@ const LiveDevice = () => {
         </div>
 
         {/* STATUS */}
+
         <div
           className={`px-4 py-2 rounded-full text-sm font-medium flex items-center gap-2
 
@@ -219,81 +285,54 @@ const LiveDevice = () => {
 
       </div>
 
-      {/* TOP CARDS */}
+      {/* SENSOR CARDS */}
+
       {latest && (
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-6">
 
-          {/* FLOW */}
-          <div className="bg-white rounded-xl p-5 shadow">
+          {sensorFields.map(
+            (field) => (
 
-            <p className="text-gray-500 text-sm">
+              <div
+                key={field.key}
+                className="bg-white rounded-xl p-5 shadow"
+              >
 
-              Current Flow
+                <p className="text-gray-500 text-sm">
 
-            </p>
+                  {field.label}
 
-            <h2 className="text-3xl font-bold mt-2 text-blue-600">
+                </p>
 
-              {latest.flow}
+                <h2
+                  className="text-2xl font-bold mt-2"
+                  style={{
+                    color:
+                      field.color,
+                  }}
+                >
 
-            </h2>
+                  {latest?.[
+                    field.key
+                  ] ?? "-"}
 
-          </div>
+                </h2>
 
-          {/* VOLUME */}
-          <div className="bg-white rounded-xl p-5 shadow">
+              </div>
 
-            <p className="text-gray-500 text-sm">
-
-              Current Volume
-
-            </p>
-
-            <h2 className="text-3xl font-bold mt-2 text-green-600">
-
-              {latest.volume}
-
-            </h2>
-
-          </div>
-
-          {/* STATUS */}
-          <div className="bg-white rounded-xl p-5 shadow">
-
-            <p className="text-gray-500 text-sm">
-
-              Device Status
-
-            </p>
-
-            <h2
-              className={`text-3xl font-bold mt-2
-
-              ${
-                deviceStatus ===
-                "online"
-
-                  ? "text-green-600"
-
-                  : "text-red-600"
-              }`}
-            >
-
-              {deviceStatus}
-
-            </h2>
-
-          </div>
+            )
+          )}
 
         </div>
 
       )}
 
       {/* GRAPH */}
+
       <div className="bg-white rounded-xl p-5 shadow mb-6">
 
-        <div className="flex justify-between items-center mb-5">
+        <div className="flex justify-between items-center mb-5 flex-wrap gap-3">
 
           <h2 className="font-semibold text-lg">
 
@@ -302,85 +341,79 @@ const LiveDevice = () => {
           </h2>
 
           {/* FILTER BUTTONS */}
-         {/* FILTER BUTTONS */}
-<div className="flex gap-3">
 
-  {/* BOTH */}
-  <button
-    onClick={() =>
-      setActiveChart(
-        "both"
-      )
-    }
-    className={`px-4 py-2 rounded-md text-sm font-medium transition cursor-pointer
+          <div className="flex gap-3 flex-wrap">
 
-    ${
-      activeChart ===
-      "both"
+            <button
+              onClick={() =>
+                setActiveChart(
+                  "all"
+                )
+              }
+              className={`px-4 py-2 rounded-md text-sm font-medium cursor-pointer
 
-        ? "bg-purple-600 text-white"
+              ${
+                activeChart ===
+                "all"
 
-        : "bg-gray-100 text-gray-700"
-    }`}
-  >
+                  ? "bg-black text-white"
 
-    Both
+                  : "bg-gray-200"
+              }`}
+            >
 
-  </button>
+              All
 
-  {/* FLOW */}
-  <button
-    onClick={() =>
-      setActiveChart(
-        "flow"
-      )
-    }
-    className={`px-4 py-2 rounded-md text-sm font-medium transition cursor-pointer
+            </button>
 
-    ${
-      activeChart ===
-      "flow"
+            {sensorFields.map(
+              (field) => (
 
-        ? "bg-blue-600 text-white"
+                <button
+                  key={field.key}
+                  onClick={() =>
+                    setActiveChart(
+                      field.key
+                    )
+                  }
+                  className={`px-4 py-2 rounded-md text-sm font-medium cursor-pointer
 
-        : "bg-gray-100 text-gray-700"
-    }`}
-  >
+                  ${
+                    activeChart ===
+                    field.key
 
-    Flow
+                      ? "text-white"
 
-  </button>
+                      : "bg-gray-200"
+                  }`}
+                  style={{
 
-  {/* VOLUME */}
-  <button
-    onClick={() =>
-      setActiveChart(
-        "volume"
-      )
-    }
-    className={`px-4 py-2 rounded-md text-sm font-medium transition cursor-pointer
+                    backgroundColor:
 
-    ${
-      activeChart ===
-      "volume"
+                      activeChart ===
+                      field.key
 
-        ? "bg-green-600 text-white"
+                        ? field.color
 
-        : "bg-gray-100 text-gray-700"
-    }`}
-  >
+                        : "",
 
-    Volume
+                  }}
+                >
 
-  </button>
+                  {field.label}
 
-</div>
+                </button>
+
+              )
+            )}
+
+          </div>
 
         </div>
 
         <ResponsiveContainer
           width="100%"
-          height={350}
+          height={400}
         >
 
           <LineChart
@@ -399,82 +432,59 @@ const LiveDevice = () => {
 
             <Tooltip />
 
-            {/* FLOW */}
-            {activeChart ===
-              "flow" && (
+            <Legend />
 
-              <Line
-                type="monotone"
-                dataKey="flow"
-                stroke="#2563eb"
-                strokeWidth={2}
-              />
+            {
 
-            )}
+              activeChart ===
+              "all"
 
-            {/* VOLUME */}
-            {activeChart ===
-              "volume" && (
+                ? (
 
-              <Line
-                type="monotone"
-                dataKey="volume"
-                stroke="#16a34a"
-                strokeWidth={2}
-              />
+                  sensorFields.map(
+                    (field) => (
 
-            )}
+                      <Line
+                        key={
+                          field.key
+                        }
+                        type="monotone"
+                        dataKey={
+                          field.key
+                        }
+                        stroke={
+                          field.color
+                        }
+                        strokeWidth={2}
+                        dot={false}
+                      />
 
+                    )
+                  )
 
-            {/* BOTH */}
-{activeChart ===
-  "both" && (
+                )
 
-  <>
+                : (
 
-    <Line
-      type="monotone"
-      dataKey="flow"
-      stroke="#2563eb"
-      strokeWidth={2}
-    />
+                  <Line
+                    type="monotone"
+                    dataKey={
+                      activeChart
+                    }
+                    stroke={
+                      sensorFields.find(
+                        (f) =>
+                          f.key ===
+                          activeChart
+                      )?.color
+                    }
+                    strokeWidth={3}
+                    dot={false}
+                  />
 
-    <Line
-      type="monotone"
-      dataKey="volume"
-      stroke="#16a34a"
-      strokeWidth={2}
-    />
+                )
 
-  </>
-
-)}
-
-{/* FLOW */}
-{activeChart ===
-  "flow" && (
-
-  <Line
-    type="monotone"
-    dataKey="flow"
-    stroke="#2563eb"
-    strokeWidth={2}
-  />
-
-)}
-
-{/* VOLUME */}
-{activeChart ===
-  "volume" && (
-
-  <Line
-    type="monotone"
-    dataKey="volume"
-    stroke="#16a34a"
-    strokeWidth={2}
-  />
-
-)}
+            }
 
           </LineChart>
 
@@ -483,6 +493,7 @@ const LiveDevice = () => {
       </div>
 
       {/* TABLE */}
+
       <div className="bg-white rounded-xl shadow overflow-hidden">
 
         <div className="p-5 border-b">
@@ -510,19 +521,36 @@ const LiveDevice = () => {
               <tr>
 
                 <th className="p-3 text-left">
+
                   Device ID
+
                 </th>
 
-                <th className="p-3 text-left">
-                  Flow
-                </th>
+                {
+
+                  sensorFields.map(
+                    (field) => (
+
+                      <th
+                        key={
+                          field.key
+                        }
+                        className="p-3 text-left"
+                      >
+
+                        {field.label}
+
+                      </th>
+
+                    )
+                  )
+
+                }
 
                 <th className="p-3 text-left">
-                  Volume
-                </th>
 
-                <th className="p-3 text-left">
                   Timestamp
+
                 </th>
 
               </tr>
@@ -536,7 +564,9 @@ const LiveDevice = () => {
                 <tr>
 
                   <td
-                    colSpan="4"
+                    colSpan={
+                      sensorFields.length + 2
+                    }
                     className="p-4 text-center"
                   >
 
@@ -548,49 +578,71 @@ const LiveDevice = () => {
 
               ) : data.length > 0 ? (
 
-                data.map((item, index) => (
+                data.map(
+                  (
+                    item,
+                    index
+                  ) => (
 
-                  <tr
-                    key={index}
-                    className="border-b hover:bg-gray-50"
-                  >
+                    <tr
+                      key={index}
+                      className="border-b hover:bg-gray-50"
+                    >
 
-                    <td className="p-3">
+                      <td className="p-3">
 
-                      {item.deviceId}
+                        {item.deviceId}
 
-                    </td>
+                      </td>
 
-                    <td className="p-3">
+                      {
 
-                      {item.flow}
+                        sensorFields.map(
+                          (
+                            field
+                          ) => (
 
-                    </td>
+                            <td
+                              key={
+                                field.key
+                              }
+                              className="p-3"
+                            >
 
-                    <td className="p-3">
+                              {
+                                item[
+                                  field.key
+                                ]
+                              }
 
-                      {item.volume}
+                            </td>
 
-                    </td>
+                          )
+                        )
 
-                    <td className="p-3">
+                      }
 
-                      {new Date(
-                        item.createdAt
-                      ).toLocaleString()}
+                      <td className="p-3">
 
-                    </td>
+                        {new Date(
+                          item.createdAt
+                        ).toLocaleString()}
 
-                  </tr>
+                      </td>
 
-                ))
+                    </tr>
+
+                  )
+                )
 
               ) : (
 
                 <tr>
 
                   <td
-                    colSpan="4"
+                    colSpan={
+                      sensorFields.length + 2
+                    }
                     className="p-4 text-center"
                   >
 

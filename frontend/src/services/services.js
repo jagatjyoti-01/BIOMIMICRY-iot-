@@ -86,6 +86,10 @@ export function getDashboardStats() {
   return client.get("/dashboard/stats");
 }
 
+export function getUserDashboardStats() {
+  return client.get("/dashboard/user-stats");
+}
+
 export function getSensorAnalytics() {
   return client.get(
     "/data/analytics"

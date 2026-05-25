@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 const generateData = () => {
   const now = new Date();
 
-  return Array.from({ length: 12 }).map((_, i) => {
+  return Array.from({ length: 12 }).map((_, i) => {d
     const base = Math.sin(i / 2) * 10;
 
     return {
