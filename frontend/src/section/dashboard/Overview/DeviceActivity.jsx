@@ -114,16 +114,16 @@ const DeviceActivity = () => {
 
   return (
 
-    <div className="bg-white border border-gray-200 rounded-xl p-6 mt-6">
+    <div className="bg-white border border-gray-200 rounded-lg md:rounded-xl p-3 md:p-6 mt-3 md:mt-6">
 
       {/* HEADER */}
-      <div className="flex justify-between items-center mb-5">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 md:gap-0 mb-3 md:mb-5">
 
-        <h2 className="text-lg font-semibold text-gray-800">
+        <h2 className="text-base md:text-lg font-semibold text-gray-800">
           Device Activity Overview
         </h2>
 
-        <select className="border border-gray-200 rounded-md px-3 py-1 text-sm outline-none">
+        <select className="border border-gray-200 rounded-md px-2 md:px-3 py-1 text-xs md:text-sm outline-none">
 
           <option>
             Monthly
@@ -134,20 +134,20 @@ const DeviceActivity = () => {
       </div>
 
       {/* SUMMARY CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 md:gap-4 mb-4 md:mb-6">
 
         {/* ACTIVE DEVICES */}
-        <div className="bg-gray-50 border border-gray-300 rounded-lg p-4">
+        <div className="bg-gray-50 border border-gray-300 rounded-lg p-2 md:p-4">
 
-          <div className="flex items-center gap-2 text-sm text-gray-500">
+          <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500">
 
-            <span className="w-2 h-2 rounded-full bg-green-500" />
+            <span className="w-2 h-2 rounded-full bg-green-500 flex-shrink-0" />
 
             Active Devices
 
           </div>
 
-          <p className="text-2xl font-semibold mt-2">
+          <p className="text-xl md:text-2xl font-semibold mt-2">
 
             {stats.activeDevices}
 
@@ -156,17 +156,17 @@ const DeviceActivity = () => {
         </div>
 
         {/* TOTAL DEVICES */}
-        <div className="bg-gray-50 border border-gray-300 rounded-lg p-4">
+        <div className="bg-gray-50 border border-gray-300 rounded-lg p-2 md:p-4">
 
-          <div className="flex items-center gap-2 text-sm text-gray-500">
+          <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500">
 
-            <span className="w-2 h-2 rounded-full bg-blue-500" />
+            <span className="w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" />
 
             Total Devices
 
           </div>
 
-          <p className="text-2xl font-semibold mt-2">
+          <p className="text-xl md:text-2xl font-semibold mt-2">
 
             {stats.totalDevices}
 
@@ -175,17 +175,17 @@ const DeviceActivity = () => {
         </div>
 
         {/* OFFLINE DEVICES */}
-        <div className="bg-gray-50 border border-gray-300 rounded-lg p-4">
+        <div className="bg-gray-50 border border-gray-300 rounded-lg p-2 md:p-4">
 
-          <div className="flex items-center gap-2 text-sm text-gray-500">
+          <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500">
 
-            <span className="w-2 h-2 rounded-full bg-red-500" />
+            <span className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
 
             Offline Devices
 
           </div>
 
-          <p className="text-2xl font-semibold mt-2">
+          <p className="text-xl md:text-2xl font-semibold mt-2">
 
             {stats.offlineDevices}
 

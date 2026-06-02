@@ -161,17 +161,7 @@ const Login = () => {
           </button>
 
           {/* Demo Accounts */}
-          <div
-            className={`mt-6 p-4 rounded-lg text-xs ${
-              dark ? "bg-[#111]" : "bg-gray-100"
-            }`}
-          >
-            <p className="font-semibold mb-2">Demo Accounts</p>
-            <p>Super Admin: admins@gmail.com / 123456</p>
-            <p>Admin: admin@admin.com / admin123</p>  
-            {/* <p>Doctor: doctor@doctor.com / doctor123</p> */}
-            <p>user: usefr3@test.com / 12345326</p>
-          </div>
+         
        </form>
       </div>
 

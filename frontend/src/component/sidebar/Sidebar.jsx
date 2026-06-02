@@ -98,7 +98,7 @@ const Sidebar = ({ collapsed, isMobileOpen, closeSidebar, toggleSidebar }) => {
     >
       {/* TOP */}
       <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
-        {!isCollapsed && <h2 className="font-bold text-lg">Bioindicators</h2>}
+        {!isCollapsed && <h2 className="font-bold text-lg">Bioindication</h2>}
 
         <button
           onClick={onSidebarButtonClick}

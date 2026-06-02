@@ -15,24 +15,26 @@ const SuperAdminDashboard = () => {
       <DashboardHeaderTop />
       <StatsCard />
 
-      <div className="flex gap-6 mt-6">
+      <div className="flex flex-col lg:flex-row gap-4 md:gap-6 mt-4 md:mt-6">
         <div className="flex-1">
           <DeviceActivity /> {/* instead of AppointmentStats */}
           <RecentAlerts /> {/* instead of PopularDoctors */}
         </div>
-        <SystemStatusPanel /> {/* instead of RightPanel */}
+        <div className="w-full lg:w-auto">
+          <SystemStatusPanel /> {/* instead of RightPanel */}
+        </div>
       </div>
 
-      <div className="grid grid-cols-12 gap-6 mt-6 mb-4">
-        <div className="col-span-12 lg:col-span-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-4 md:mt-6 mb-4">
+        <div>
           <WaterQualityChart />
         </div>
 
-        <div className="col-span-12 lg:col-span-4">
+        <div>
           <DeviceDistribution />
         </div>
 
-        <div className="col-span-12 lg:col-span-4">
+        <div>
           <PowerUsage />
         </div>
       </div>

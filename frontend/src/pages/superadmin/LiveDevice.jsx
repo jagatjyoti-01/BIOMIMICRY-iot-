@@ -526,6 +526,12 @@ const LiveDevice = () => {
 
                 </th>
 
+                <th className="p-3 text-left">
+
+                  Timestamp
+
+                </th>
+
                 {
 
                   sensorFields.map(
@@ -547,11 +553,7 @@ const LiveDevice = () => {
 
                 }
 
-                <th className="p-3 text-left">
-
-                  Timestamp
-
-                </th>
+                
 
               </tr>
 
@@ -595,6 +597,15 @@ const LiveDevice = () => {
 
                       </td>
 
+                       <td className="p-3">
+
+                        {new Date(
+                          item.createdAt
+                        ).toLocaleString()}
+
+                      </td>
+
+
                       {
 
                         sensorFields.map(
@@ -622,14 +633,7 @@ const LiveDevice = () => {
 
                       }
 
-                      <td className="p-3">
-
-                        {new Date(
-                          item.createdAt
-                        ).toLocaleString()}
-
-                      </td>
-
+                     
                     </tr>
 
                   )

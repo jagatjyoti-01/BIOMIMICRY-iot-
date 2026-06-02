@@ -12,7 +12,7 @@ import DeviceTable from "../../section/dashboard/Overview/DeviceTable";
 const AdminDashboard = () => {
   return (
     
-      <div className="p-6 bg-gray-100 min-h-screen">
+      <div className="p-3 sm:p-4 md:p-6 bg-gray-100 min-h-screen">
 
         {/* Header */}
         <DashboardHeaderTop />
@@ -21,23 +21,25 @@ const AdminDashboard = () => {
         <StatsCard />
 
         {/* Middle */}
-        <div className="flex gap-6 mt-6">
+        <div className="flex flex-col lg:flex-row gap-4 md:gap-6 mt-4 md:mt-6">
           <div className="flex-1">
             <DeviceActivity />
             <RecentAlerts />
           </div>
 
-          <SystemStatusPanel />
+          <div className="w-full lg:w-auto">
+            <SystemStatusPanel />
+          </div>
         </div>
 
         {/* Bottom */}
-        <div className="grid grid-cols-12 gap-6 mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-4 md:mt-6">
 
-          <div className="col-span-12 lg:col-span-6">
+          <div>
             <WaterQualityChart />
           </div>
 
-          <div className="col-span-12 lg:col-span-6">
+          <div>
             <DeviceDistribution />
           </div>
 

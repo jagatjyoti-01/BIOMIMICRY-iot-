@@ -108,18 +108,18 @@ const DeviceDistribution = () => {
 
   return (
 
-    <div className="bg-white rounded-xl p-5 shadow-sm">
+    <div className="bg-white rounded-lg md:rounded-xl p-3 md:p-5 shadow-sm">
 
       {/* Header */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 md:gap-0 mb-3 md:mb-4">
 
-        <h3 className="font-semibold text-gray-800">
+        <h3 className="font-semibold text-sm md:text-base text-gray-800">
 
           Device Distribution
 
         </h3>
 
-        <button className="text-sm bg-gray-100 px-3 py-1 rounded-md hover:bg-gray-200 cursor-pointer">
+        <button className="text-xs md:text-sm bg-gray-100 px-2 md:px-3 py-1 rounded-md hover:bg-gray-200 cursor-pointer">
 
           View All
 
@@ -128,18 +128,18 @@ const DeviceDistribution = () => {
       </div>
 
       {/* Stats */}
-      <div className="flex justify-between text-center mb-4">
+      <div className="grid grid-cols-3 gap-2 md:gap-4 mb-3 md:mb-4">
 
         {/* ONLINE */}
-        <div>
+        <div className="text-center">
 
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 text-xs md:text-sm">
 
             Online
 
           </p>
 
-          <h2 className="font-bold text-xl text-green-600">
+          <h2 className="font-bold text-lg md:text-xl text-green-600">
 
             {stats.online}
 
@@ -148,15 +148,15 @@ const DeviceDistribution = () => {
         </div>
 
         {/* OFFLINE */}
-        <div>
+        <div className="text-center">
 
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 text-xs md:text-sm">
 
             Offline
 
           </p>
 
-          <h2 className="font-bold text-xl text-red-600">
+          <h2 className="font-bold text-lg md:text-xl text-red-600">
 
             {stats.offline}
 
@@ -165,15 +165,15 @@ const DeviceDistribution = () => {
         </div>
 
         {/* MAINTENANCE */}
-        <div>
+        <div className="text-center">
 
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-500 text-xs md:text-sm">
 
             Maintenance
 
           </p>
 
-          <h2 className="font-bold text-xl text-yellow-600">
+          <h2 className="font-bold text-lg md:text-xl text-yellow-600">
 
             {stats.maintenance}
 
@@ -184,21 +184,21 @@ const DeviceDistribution = () => {
       </div>
 
       {/* Device List */}
-      <div className="space-y-6">
+      <div className="space-y-3 md:space-y-6">
 
         {devices.slice(0, 4).map((device, i) => (
 
           <div
             key={i}
-            className="flex items-center justify-between"
+            className="flex items-center justify-between gap-2"
           >
 
             {/* LEFT */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 md:gap-3 min-w-0">
 
               {/* ICON */}
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-xs ${getStatusColor(
+                className={`w-8 md:w-10 h-8 md:h-10 rounded-full flex items-center justify-center text-white text-xs flex-shrink-0 ${getStatusColor(
                   device.status
                 )}`}
               >
@@ -208,15 +208,15 @@ const DeviceDistribution = () => {
               </div>
 
               {/* DETAILS */}
-              <div>
+              <div className="min-w-0">
 
-                <p className="text-sm font-medium text-gray-800">
+                <p className="text-xs md:text-sm font-medium text-gray-800 truncate">
 
                   {device.deviceId}
 
                 </p>
 
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-gray-500 truncate">
 
                   {device.location || "-"}
 
@@ -227,7 +227,7 @@ const DeviceDistribution = () => {
             </div>
 
             {/* STATUS */}
-            <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600 capitalize">
+            <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600 capitalize flex-shrink-0">
 
               {device.status}
 

@@ -15,28 +15,28 @@ const quickAlerts = [
 
 const SystemStatusPanel = () => {
   return (
-    <div className="w-[320px]">
+    <div className="w-full lg:w-[320px]">
 
       {/* Calendar */}
       <CalendarCard />
 
       {/* System Stats */}
-      <div className="bg-white border border-gray-200 rounded-xl p-5 mt-4">
+      <div className="bg-white border border-gray-200 rounded-xl p-4 md:p-5 mt-4">
 
-        <h3 className="text-sm font-semibold text-gray-700 mb-4">
+        <h3 className="text-sm font-semibold text-gray-700 mb-3 md:mb-4">
           System Status
         </h3>
 
-        <div className="space-y-3">
+        <div className="space-y-2 md:space-y-3">
           {systemStats.map((item, i) => (
             <div
               key={i}
-              className={`${item.color} rounded-lg p-3 flex justify-between`}
+              className={`${item.color} rounded-lg p-2 md:p-3 flex justify-between`}
             >
-              <span className="text-sm text-gray-600">
+              <span className="text-xs md:text-sm text-gray-600">
                 {item.label}
               </span>
-              <span className="font-semibold text-gray-800">
+              <span className="text-sm md:text-base font-semibold text-gray-800">
                 {item.value}
               </span>
             </div>
@@ -46,28 +46,28 @@ const SystemStatusPanel = () => {
       </div>
 
       {/* Quick Alerts */}
-     {/* Quick Alerts */}
-<div className="bg-white rounded-xl p-5 mt-4 shadow-sm">
+      {/* Quick Alerts */}
+<div className="bg-white rounded-xl p-4 md:p-5 mt-4 shadow-sm">
 
-  <h3 className="text-sm font-semibold text-gray-700 mb-4">
+  <h3 className="text-sm font-semibold text-gray-700 mb-3 md:mb-4">
     Quick Alerts
   </h3>
 
-  <div className="space-y-3">
+  <div className="space-y-2 md:space-y-3">
 
     {quickAlerts.map((item, i) => (
       <div
         key={i}
-        className="flex items-center justify-between bg-gray-50 rounded-lg p-3 hover:bg-gray-100 transition"
+        className="flex items-center justify-between bg-gray-50 rounded-lg p-2 md:p-3 hover:bg-gray-100 transition"
       >
         {/* LEFT */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3 min-w-0">
 
           {/* Indicator */}
-          <div className="w-1 h-8 bg-red-500 rounded" />
+          <div className="w-1 h-6 md:h-8 bg-red-500 rounded flex-shrink-0" />
 
-          <div>
-            <p className="text-sm text-gray-800 font-medium">
+          <div className="min-w-0">
+            <p className="text-xs md:text-sm text-gray-800 font-medium truncate">
               {item.msg}
             </p>
             <p className="text-xs text-gray-400">
@@ -78,20 +78,20 @@ const SystemStatusPanel = () => {
         </div>
 
         {/* Status dot */}
-        <div className="w-2 h-2 bg-red-500 rounded-full" />
+        <div className="w-2 h-2 bg-red-500 rounded-full flex-shrink-0" />
       </div>
     ))}
 
   </div>
 
-  <button className="w-full text-sm text-blue-600 mt-4 font-medium hover:underline">
+  <button className="w-full text-xs md:text-sm text-blue-600 mt-3 md:mt-4 font-medium hover:underline">
     View All Alerts
   </button>
 
 </div>
 
       {/* Floating Settings Button */}
-      <button className="fixed right-6 bottom-20 bg-blue-600 text-white w-12 h-12 rounded-md shadow-md hover:scale-105 transition">
+      <button className="fixed right-4 md:right-6 bottom-20 bg-blue-600 text-white w-12 h-12 rounded-md shadow-md hover:scale-105 transition">
         ⚙️
       </button>
 

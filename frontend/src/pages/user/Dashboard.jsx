@@ -15,42 +15,19 @@ import MyDevices from "../user/MyDevices";
 const UserDashboard = () => {
   return (
     <>
-      <div className="p-6 bg-gray-100 ">
+      <div className="p-3 sm:p-4 md:p-6 bg-gray-100">
         {/* Header */}
-        <DashboardHeaderTop />{/* Stats */}
+        <DashboardHeaderTop />
+        {/* Stats */}
         <StatsCard />
-        {/* Middle */}
-        {/* <div className="flex gap-6 mt-6">
-          <div className="flex-1">
-            <DeviceActivity />
-            <RecentAlerts />
-          </div>
-
-          <SystemStatusPanel />
-        </div> */}
-        {/* Bottom */}
-        {/* <div className="grid grid-cols-12 gap-6 mt-6">
-          <div className="col-span-12 lg:col-span-6">
-            <WaterQualityChart />
-          </div>
-
-          <div className="col-span-12 lg:col-span-6">
-            <WaterFlowChart />
-          </div>
-        </div> */}
         {/* Table */}
-        {/* <DeviceTable /> */}
-       < MyDevices />
+        <MyDevices />
       </div>
 
-      <div className=" mt-6">
-        <div className="col-span-12 lg:col-span-8">
+      <div className="mt-4 md:mt-6 px-3 sm:px-4 md:px-6">
+        <div>
           <UserParameterChart />
         </div>
-
-        {/* <div className="col-span-12 lg:col-span-4">
-          <DownloadReport />
-        </div> */}
       </div>
     </>
   );

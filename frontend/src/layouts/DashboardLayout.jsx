@@ -55,7 +55,7 @@ const DashboardLayout = () => {
         <Header toggleSidebar={toggleSidebar} />
 
         {/* CONTENT */}
-        <div className="flex-1 overflow-y-auto p-2">
+        <div className="flex-1 overflow-y-auto p-2 sm:p-3 md:p-4">
 
           <Outlet />
 

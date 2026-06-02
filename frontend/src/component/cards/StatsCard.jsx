@@ -72,14 +72,14 @@ const StatsCard = ({
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm hover:shadow-md transition relative">
+    <div className="bg-white rounded-lg md:rounded-xl border border-gray-200 p-3 md:p-5 shadow-sm hover:shadow-md transition relative">
 
       {/* TOP */}
       <div className="flex justify-between items-start">
         
         {/* ICON */}
         <div
-          className="w-11 h-11 rounded-lg flex items-center justify-center text-white"
+          className="w-9 md:w-11 h-9 md:h-11 rounded-lg flex items-center justify-center text-white flex-shrink-0"
           style={{ backgroundColor: iconBg }}
         >
           {icon}
@@ -105,15 +105,15 @@ const StatsCard = ({
       </div>
 
       {/* CONTENT */}
-      <div className="mt-4">
-        <p className="text-gray-500 text-sm">{title}</p>
-        <h2 className="text-2xl font-bold text-gray-800 mt-1">
+      <div className="mt-3 md:mt-4">
+        <p className="text-gray-500 text-xs md:text-sm">{title}</p>
+        <h2 className="text-lg md:text-2xl font-bold text-gray-800 mt-1">
           {value}
         </h2>
       </div>
 
       {/* GRAPH */}
-      <div className="absolute bottom-4 right-4 opacity-80">
+      <div className="absolute bottom-3 md:bottom-4 right-3 md:right-4 opacity-80 scale-75 md:scale-100 origin-bottom-right">
         {renderGraph()}
       </div>
     </div>

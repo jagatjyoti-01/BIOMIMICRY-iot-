@@ -80,20 +80,20 @@ const DeviceTable = () => {
 
   return (
 
-    <div className="bg-white rounded-xl overflow-hidden shadow-sm mt-4 border border-gray-200">
+    <div className="bg-white rounded-lg md:rounded-xl overflow-hidden shadow-sm mt-3 md:mt-4 border border-gray-200">
 
       {/* HEADER */}
-      <div className="flex justify-between items-center p-5">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 md:p-5">
 
         <div>
 
-          <h2 className="font-semibold text-lg text-gray-800">
+          <h2 className="font-semibold text-base md:text-lg text-gray-800">
 
             All Devices
 
           </h2>
 
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-xs md:text-sm text-gray-500 mt-1">
 
             Real-time device monitoring overview
 
@@ -101,7 +101,7 @@ const DeviceTable = () => {
 
         </div>
 
-        <button className="text-sm bg-gray-100 px-3 py-1 rounded-md hover:bg-gray-200 cursor-pointer">
+        <button className="text-xs md:text-sm bg-gray-100 px-2 md:px-3 py-1 rounded-md hover:bg-gray-200 cursor-pointer">
 
           View All
 
@@ -112,30 +112,30 @@ const DeviceTable = () => {
       {/* TABLE */}
       <div className="overflow-x-auto">
 
-        <table className="w-full text-sm">
+        <table className="w-full text-xs md:text-sm">
 
           {/* TABLE HEADER */}
           <thead className="bg-gray-50 text-gray-600 border-y border-gray-200">
 
             <tr>
 
-              <th className="text-left px-5 py-3">
+              <th className="text-left px-2 md:px-5 py-2 md:py-3">
                 Device
               </th>
 
-              <th className="text-left px-5 py-3">
+              <th className="text-left px-2 md:px-5 py-2 md:py-3 hidden sm:table-cell">
                 Location
               </th>
 
-              <th className="text-left px-5 py-3">
+              <th className="text-left px-2 md:px-5 py-2 md:py-3 hidden md:table-cell">
                 Last Updated
               </th>
 
-              <th className="text-left px-5 py-3">
+              <th className="text-left px-2 md:px-5 py-2 md:py-3">
                 Status
               </th>
 
-              <th className="text-left px-5 py-3">
+              <th className="text-left px-2 md:px-5 py-2 md:py-3 hidden sm:table-cell">
                 Health
               </th>
 
@@ -154,27 +154,27 @@ const DeviceTable = () => {
               >
 
                 {/* DEVICE */}
-                <td className="px-5 py-4">
+                <td className="px-2 md:px-5 py-2 md:py-4">
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 md:gap-3">
 
                     {/* ICON */}
-                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-xs font-semibold text-blue-600">
+                    <div className="w-8 md:w-10 h-8 md:h-10 rounded-full bg-blue-100 flex items-center justify-center text-xs font-semibold text-blue-600 flex-shrink-0">
 
                       {item.deviceId?.slice(-3)}
 
                     </div>
 
                     {/* DETAILS */}
-                    <div>
+                    <div className="min-w-0">
 
-                      <p className="font-medium text-gray-800">
+                      <p className="font-medium text-gray-800 truncate text-xs md:text-sm">
 
                         {item.deviceId}
 
                       </p>
 
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 truncate">
 
                         {item.deviceName}
 
@@ -187,14 +187,14 @@ const DeviceTable = () => {
                 </td>
 
                 {/* LOCATION */}
-                <td className="px-5 py-4 text-gray-600">
+                <td className="px-2 md:px-5 py-2 md:py-4 text-gray-600 hidden sm:table-cell text-xs md:text-sm">
 
                   {item.location || "-"}
 
                 </td>
 
                 {/* LAST UPDATED */}
-                <td className="px-5 py-4 text-gray-500">
+                <td className="px-2 md:px-5 py-2 md:py-4 text-gray-500 hidden md:table-cell text-xs md:text-sm">
 
                   {new Date(
                     item.updatedAt
@@ -203,10 +203,10 @@ const DeviceTable = () => {
                 </td>
 
                 {/* STATUS */}
-                <td className="px-5 py-4">
+                <td className="px-2 md:px-5 py-2 md:py-4">
 
                   <span
-                    className={`text-xs px-3 py-1 rounded-full font-medium capitalize ${getStatusStyle(
+                    className={`text-xs px-2 md:px-3 py-1 rounded-full font-medium capitalize ${getStatusStyle(
                       item.status
                     )}`}
                   >
@@ -218,10 +218,10 @@ const DeviceTable = () => {
                 </td>
 
                 {/* HEALTH */}
-                <td className="px-5 py-4">
+                <td className="px-2 md:px-5 py-2 md:py-4 hidden sm:table-cell">
 
                   <span
-                    className={`font-medium ${getHealthStyle(
+                    className={`font-medium text-sm ${getHealthStyle(
                       item.isActive
                     )}`}
                   >
