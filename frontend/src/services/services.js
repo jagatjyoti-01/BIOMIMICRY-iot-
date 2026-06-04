@@ -36,6 +36,11 @@ export function getUsers(params) {
   });
 }
 
+//delete user
+export function deleteUser(id) {
+  return client.delete(`/users/${id}`);
+}
+
 // ================= PERMISSIONS =================
 
 // get all permissions
@@ -63,6 +68,10 @@ export function updateDevice(id, payload) {
     `/devices/${id}`,
     payload
   );
+}
+
+export function deleteDevice(id) {
+  return client.delete(`/devices/${id}`);
 }
 
 

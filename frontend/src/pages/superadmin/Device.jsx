@@ -22,6 +22,7 @@ import {
   getDevices,
   getUsers,
   updateDevice,
+  deleteDevice,
 } from "../../services/services";
 
 function Device() {
@@ -81,6 +82,18 @@ function Device() {
 
       setOpenEdit(false);
 
+      fetchDevices();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDeleteDevice = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this device?")) return;
+
+    try {
+      await deleteDevice(id);
+      alert("Device deleted successfully");
       fetchDevices();
     } catch (error) {
       console.log(error);
@@ -243,15 +256,24 @@ function Device() {
     {
       field: "actions",
       headerName: "Actions",
-      width: 120,
+      width: 180,
 
       renderCell: (params) => (
-        <button
-          className="bg-blue-600 text-white px-3 py-1 cursor-pointer rounded text-xs mt-2"
-          onClick={() => handleEdit(params.row)}
-        >
-          Edit
-        </button>
+        <div className="flex gap-2">
+          <button
+            className="bg-blue-600 text-white px-3 py-1 cursor-pointer rounded text-xs mt-2"
+            onClick={() => handleEdit(params.row)}
+          >
+            Edit
+          </button>
+
+          <button
+            className="bg-red-600 text-white px-3 py-1 cursor-pointer rounded text-xs mt-2"
+            onClick={() => handleDeleteDevice(params.row.id)}
+          >
+            Delete
+          </button>
+        </div>
       ),
     },
   ];

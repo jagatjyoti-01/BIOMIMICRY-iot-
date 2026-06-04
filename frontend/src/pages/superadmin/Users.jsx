@@ -14,6 +14,7 @@ import {
   getUsers,
   getPermissions,
    updateUser,
+  deleteUser,
 } from "../../services/services";
 
 import {
@@ -108,6 +109,21 @@ const handleUpdateUser = async () => {
 
   }
 
+};
+
+const handleDeleteUser = async (id) => {
+  if (!window.confirm("Are you sure you want to delete this user?")) return;
+
+  try {
+    await deleteUser(id);
+
+    alert("User deleted successfully");
+
+    fetchUsers();
+
+  } catch (error) {
+    console.log(error);
+  }
 };
 
   // ================= FETCH USERS =================
@@ -263,12 +279,21 @@ const handleUpdateUser = async () => {
   width: 120,
 
   renderCell: (params) => (
-    <button
-      className="bg-blue-600 text-white px-3 py-1 rounded text-xs mt-2"
-      onClick={() => handleEdit(params.row)}
-    >
-      Edit
-    </button>
+    <div className="flex gap-2">
+      <button
+        className="bg-blue-600 text-white px-3 py-1 rounded text-xs mt-2"
+        onClick={() => handleEdit(params.row)}
+      >
+        Edit
+      </button>
+
+      <button
+        className="bg-red-600 text-white px-3 py-1 rounded text-xs mt-2"
+        onClick={() => handleDeleteUser(params.row.id)}
+      >
+        Delete
+      </button>
+    </div>
   ),
 },
   ];
