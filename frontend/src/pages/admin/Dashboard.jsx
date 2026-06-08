@@ -27,9 +27,9 @@ const AdminDashboard = () => {
             <RecentAlerts />
           </div>
 
-          <div className="w-full lg:w-auto">
+          {/* <div className="w-full lg:w-auto">
             <SystemStatusPanel />
-          </div>
+          </div> */}
         </div>
 
         {/* Bottom */}

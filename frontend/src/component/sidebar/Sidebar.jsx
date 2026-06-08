@@ -60,15 +60,18 @@ const Sidebar = ({ collapsed, isMobileOpen, closeSidebar, toggleSidebar }) => {
     admin: {
       label: "Organization Admin",
       subLabel: "Manage Users & Devices",
-      dashboard: "/admin/dashboard",
+      dashboard: "/dashboard/admin",
       management: [
-        { name: "Users", icon: Users, path: "/admin/users" },
-        { name: "Devices", icon: Cpu, path: "/admin/devices" },
+       { name: "Users", icon: Users, path: "/dashboard/users" },
+        { name: "Devices", icon: Cpu, path: "/dashboard/devices" },         
       ],
       monitoring: [
-        { name: "Live Monitoring", icon: Cpu, path: "/admin/live" },
-        { name: "Alerts", icon: AlertTriangle, path: "/admin/alerts" },
-        { name: "Reports", icon: FileText, path: "/admin/reports" },
+        {
+          name: "Live Monitoring",
+          icon: Cpu,
+          path: "/dashboard/live-monitoring",
+        },
+        { name: "Download Report", icon: AlertTriangle, path: "download-report" },
       ],
     },
 

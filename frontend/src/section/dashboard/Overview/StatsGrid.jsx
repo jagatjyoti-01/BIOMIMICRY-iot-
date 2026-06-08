@@ -60,30 +60,17 @@ const StatsGrid = () => {
 
         let response;
 
-        // SUPERADMIN
-        if (
-          role ===
-          "superadmin"
-        ) {
+// SUPERADMIN + ADMIN
+      if (role === "superadmin" || role === "admin") {
+        response = await getDashboardStats();
+      }
 
-          response =
-            await getDashboardStats();
+      // USER
+      else if (role === "user") {
+        response = await getUserDashboardStats();
+      }
 
-        }
-
-        // USER
-        else if (
-          role === "user"
-        ) {
-
-          response =
-            await getUserDashboardStats();
-
-        }
-
-        setStats(
-          response.data.data
-        );
+      setStats(response.data.data);
 
       } catch (error) {
 
@@ -317,6 +304,8 @@ const StatsGrid = () => {
 
   const cards =
     statsData[role] ||
+    statsData.admin ||
+    statsData.superadmin ||
     statsData.user;
 
   return (

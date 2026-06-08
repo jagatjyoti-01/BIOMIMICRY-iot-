@@ -24,6 +24,8 @@ import CommonDevice from "./pages/common/Device";
 
 // ADMIN
 import AdminDashboard from "./pages/admin/Dashboard";
+import AdminDevice from "./pages/admin/Device";
+import AdminUsers from "./pages/admin/Users";
 
 // USER
 import UserDashboard from "./pages/user/Dashboard";
@@ -43,6 +45,49 @@ const ProtectedRoute = ({ children }) => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   return user ? children : <Navigate to="/" />;
+};
+
+// ================= ROLE-AWARE DEVICE PAGE =================
+const UnauthorizedPage = () => {
+  return (
+    <div className="p-4">
+      <h1 className="text-xl font-semibold text-gray-800">Unauthorized</h1>
+      <p className="mt-2 text-gray-600">
+        You do not have permission to view this page.
+      </p>
+    </div>
+  );
+};
+
+const DevicesPageRouter = () => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const role = user.role?.toLowerCase() || "user";
+
+  if (role === "admin") {
+    return <AdminDevice />;
+  }
+
+  if (role === "superadmin") {
+    return <Device />;
+  }
+
+  return <UnauthorizedPage />;
+};
+
+// ================= ROLE-AWARE USERS PAGE =================
+const UsersPageRouter = () => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const role = user.role?.toLowerCase() || "user";
+
+  if (role === "admin") {
+    return <AdminUsers />;
+  }
+
+  if (role === "superadmin") {
+    return <Users />;
+  }
+
+  return <UnauthorizedPage />;
 };
 
 function App() {
@@ -68,10 +113,10 @@ function App() {
           <Route path="profile" element={<Profile />} />
 
           {/* DEVICES */}
-          <Route path="devices" element={<Device />} />
+          <Route path="devices" element={<DevicesPageRouter />} />
 
           {/* USERS */}
-          <Route path="users" element={<Users />} />
+          <Route path="users" element={<UsersPageRouter />} />
 
           {/* SUPERADMIN DASHBOARD */}
           <Route path="superadmin" element={<SuperAdminDashboard />} />
