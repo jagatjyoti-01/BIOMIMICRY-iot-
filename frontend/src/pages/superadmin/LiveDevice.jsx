@@ -48,53 +48,66 @@ const LiveDevice = () => {
 
   const sensorFields = [
 
+     {
+      key: "volume",
+      label: "Volume",
+        unit: "KL",
+      color: "#16a34a",
+    },
+      {
+      key: "cumulativeVolume",
+      label: "Cumulative Volume",
+       unit: "KL",  
+      color: "#9333ea",
+    },
+
+  {
+      key: "powerConsumption",
+      label: "Power",
+       unit: "kWh",
+      color: "#ea580c",
+    },
+
     {
       key: "flow",
       label: "Flow",
+       unit: "L/min",
       color: "#2563eb",
     },
 
-    {
-      key: "volume",
-      label: "Volume",
-      color: "#16a34a",
-    },
+   
 
-    {
-      key: "cumulativeVolume",
-      label: "Cumulative Volume",
-      color: "#9333ea",
-    },
+  
 
     {
       key: "ph",
       label: "PH",
+       unit: "",
       color: "#f59e0b",
     },
 
     {
       key: "cod",
       label: "COD",
+       unit: "mg/L",
       color: "#dc2626",
     },
 
     {
       key: "bod",
       label: "BOD",
+       unit: "mg/L",
       color: "#0891b2",
     },
 
     {
       key: "turbidity",
       label: "Turbidity",
+      unit: "NTU",
       color: "#7c3aed",
     },
 
-    {
-      key: "powerConsumption",
-      label: "Power",
-      color: "#ea580c",
-    },
+  
 
   ];
 
@@ -312,10 +325,7 @@ const LiveDevice = () => {
                       field.color,
                   }}
                 >
-
-                  {latest?.[
-                    field.key
-                  ] ?? "-"}
+{latest?.[field.key] ?? "-"} {field.unit}
 
                 </h2>
 
@@ -400,7 +410,7 @@ const LiveDevice = () => {
                   }}
                 >
 
-                  {field.label}
+                 {field.label} {field.unit && `(${field.unit})`}
 
                 </button>
 
@@ -544,7 +554,7 @@ const LiveDevice = () => {
                         className="p-3 text-left"
                       >
 
-                        {field.label}
+                        {field.label} {field.unit && `(${field.unit})`}
 
                       </th>
 
