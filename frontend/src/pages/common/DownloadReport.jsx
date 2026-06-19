@@ -168,14 +168,19 @@ const DownloadReport = () => {
         // ================= CSV HEADERS =================
 
         const headers = [
+          
 
           "Device ID",
-
-          "Flow",
-
-          "Volume",
+          "Timestamp",
+           "Volume",
 
           "Cumulative Volume",
+
+           "Power Consumption",
+
+          "cumulativePower",
+
+         
 
           "PH",
 
@@ -185,9 +190,9 @@ const DownloadReport = () => {
 
           "Turbidity",
 
-          "Power Consumption",
+         
 
-          "Timestamp",
+          
 
         ];
 
@@ -199,11 +204,19 @@ const DownloadReport = () => {
 
               item.deviceId,
 
-              item.flow,
+               `"${new Date(item.createdAt).toLocaleString()}"`,
 
-              item.volume,
+               item.volume,
 
               item.cumulativeVolume,
+
+               item.powerConsumption,
+
+
+              item.flow,
+
+              
+             
 
               item.ph,
 
@@ -213,12 +226,9 @@ const DownloadReport = () => {
 
               item.turbidity,
 
-              item.powerConsumption,
+             
 
-              new Date(
-                item.createdAt
-              ).toLocaleString(),
-
+             
             ]
           );
 

@@ -64,14 +64,14 @@ const LiveDevice = () => {
   {
       key: "powerConsumption",
       label: "Power",
-       unit: "kWh",
+       unit: "Kw",
       color: "#ea580c",
     },
 
     {
       key: "flow",
-      label: "Flow",
-       unit: "L/min",
+      label: "cumulative Power",
+       unit: "Kwh",
       color: "#2563eb",
     },
 
@@ -454,20 +454,15 @@ const LiveDevice = () => {
                   sensorFields.map(
                     (field) => (
 
-                      <Line
-                        key={
-                          field.key
-                        }
-                        type="monotone"
-                        dataKey={
-                          field.key
-                        }
-                        stroke={
-                          field.color
-                        }
-                        strokeWidth={2}
-                        dot={false}
-                      />
+                     <Line
+  key={field.key}
+  type="monotone"
+  dataKey={field.key}
+  name={field.label}
+  stroke={field.color}
+  strokeWidth={2}
+  dot={false}
+/>
 
                     )
                   )

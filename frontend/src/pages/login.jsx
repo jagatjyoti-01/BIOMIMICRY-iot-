@@ -66,7 +66,7 @@ const Login = () => {
        <div className="relative max-w-md px-8 text-center">
 
   <img
-    src="/assets/logo.jpeg"
+    src="/assets/logo.png"
     alt="Biomimicry Tech Logo"
     className="h-30 w-auto mx-auto mb-6"
   />
@@ -97,7 +97,7 @@ const Login = () => {
 
           <div className="lg:hidden flex justify-center mb-6">
   <img
-    src="/assets/logo.jpeg"
+    src="/assets/logo.png"
     alt="Biomimicry Tech Logo"
     className="h-20 w-auto"
   />
