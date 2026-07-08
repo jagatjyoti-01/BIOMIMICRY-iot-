@@ -53,9 +53,8 @@ const StatsGrid = () => {
 
   // ================= FETCH STATS =================
 
-  const fetchStats =
-    async () => {
-
+  const fetchStats = async () => {
+console.log("fetchStats called");
       try {
 
         let response;
@@ -82,21 +81,9 @@ const StatsGrid = () => {
 
   // ================= AUTO REFRESH =================
 
-  useEffect(() => {
-
-    fetchStats();
-
-    const interval =
-      setInterval(() => {
-
-        fetchStats();
-
-      }, 5000);
-
-    return () =>
-      clearInterval(interval);
-
-  }, []);
+useEffect(() => {
+  fetchStats();
+}, []);
 
   // ================= ROLE BASED CARDS =================
 

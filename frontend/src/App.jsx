@@ -38,6 +38,7 @@ import LiveMonitoring from "./pages/superadmin/LiveMonitoring";
 import MyDevices from "./pages/user/MyDevices";
 
 import DownloadReport from "./pages/common/DownloadReport";
+import ImportData from "./pages/common/ImportData";
 
 // ================= PROTECTED ROUTE =================
 
@@ -129,32 +130,24 @@ function App() {
 
           <Route path="permissions" element={<Permissions />} />
 
+          <Route path="live-monitoring" element={<LiveMonitoring />} />
 
-          <Route
-  path="live-monitoring"
-  element={<LiveMonitoring />}
-/>
+          <Route path="live-monitoring/:deviceId" element={<LiveDevice />} />
 
-<Route
-  path="live-monitoring/:deviceId"
-  element={<LiveDevice />}
-/>
+          <Route path="user/devices" element={<MyDevices />} />
 
-<Route
-  path="user/devices"
-  element={<MyDevices />}
-/>
+          <Route path="download-report" element={<DownloadReport />} />
 
-<Route
-path="download-report"
-element={<DownloadReport />}
-/>
-
-{/* 
+          {/* 
           <Route
   path="devices"
   element={<CommonDevice />}
 /> */}
+
+<Route
+    path="import-data"
+    element={<ImportData />}
+/>
         </Route>
       </Routes>
     </Router>

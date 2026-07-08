@@ -4,6 +4,7 @@ import CYS from "./Secret";
 import { logout } from "./axiosClient";
 
 export function createAxiosClient({ options, getCurrentAccessToken }) {
+
   const client = axios.create(options);
 client.interceptors.request.use(
   (config) => {
@@ -22,6 +23,8 @@ client.interceptors.request.use(
 
   client.interceptors.response.use(
     (response) => {
+
+      //console.log(config.method, config.url);
       if (response.data && typeof response.data.data === "string") {
         response.data.data = JSON.parse(
           CryptoJS.AES.decrypt(response.data.data, CYS).toString(
@@ -29,7 +32,7 @@ client.interceptors.request.use(
           ),
         );
       }
-      return response;
+      return response;a
     },
     async (error) => {
       console.log(error);

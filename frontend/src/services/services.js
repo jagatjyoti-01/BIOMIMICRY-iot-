@@ -99,6 +99,20 @@ export function getUserDashboardStats() {
   return client.get("/dashboard/user-stats");
 }
 
+export function importSensorData(formData) {
+
+    return client.post(
+        "/data/import",
+        formData,
+        {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        }
+    );
+
+}
+
 export function getSensorAnalytics() {
   return client.get(
     "/data/analytics"
@@ -123,9 +137,7 @@ export function getLatestSensorData() {
 }
 
 
-export function getSensorDataByDeviceId(
-  deviceId
-) {
+export function getSensorDataByDeviceId(deviceId) {
 
   return client.get(
     `/data/device/${deviceId}`
@@ -149,6 +161,7 @@ export function downloadSensorReport(
   );
 
 }
+
 
 
 export function getMyDevices() {
